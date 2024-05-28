@@ -105,3 +105,72 @@ int fibonacci(int n){
     
     return fibonacci(n-2) + fibonacci(n-1);
 }
+
+int fibonacciIter(int n){
+    
+    if(n == 0 || n == 1){
+        return n;
+    }
+    int prev = 0;
+    int result = 1;
+    for(int i=1; i<n; i++){
+        int temp = result;
+        result += prev;
+        prev = temp;
+    }
+    
+    /**
+        Better:
+     int t0 = 0;
+     int t1 = 1;
+     int result = 0;
+     for(int i=2; i<=n; i++){
+         result = t0 + t1;
+         t0 = t1;
+         t1 = result;
+     }
+     */
+    
+    return result;
+}
+
+// For memoization, using global variable
+// Can only be applied based on the array size
+int F[10] = {0,1,1,-1,-1,-1,-1,-1,-1,-1};
+int fibonacciMemoization(int n){
+    
+    if(n == 0 || n == 1){
+        return F[n];
+    }
+    
+    if(F[n-2] == -1){
+        F[n-2] = fibonacciMemoization(n-2);
+    }
+    
+    if(F[n-1] == -1){
+        F[n-1] = fibonacciMemoization(n-1);
+    }
+    
+    F[n] = F[n-2] + F[n-1];
+    return F[n];
+}
+
+// Pascal triangle
+int combination(int n, int r){
+    
+    if(r == 0 || r == n){
+        return 1;
+    }
+    return combination(n-1, r-1) + combination(n-1, r);
+}
+
+void towerOfHanoi(int n, char A, char B, char C){
+    
+    if(n==1){
+        printf("Move from %c to %c \n", A, C);
+    } else{
+        towerOfHanoi(n-1, A, C, B);
+        towerOfHanoi(1, A, B, C);
+        towerOfHanoi(n-1, B, A, C);
+    }
+}
