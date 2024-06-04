@@ -44,17 +44,17 @@ void Swap(int *x, int *y){
  No modification is made, so passing by value is just fine, but if 'Transposition' / 'Move to front/head' is applied, then pass by address is needed
  */
 int LinearSearch(struct Array *arr, int target){
-   
+    
     for(int i=0; i<=arr->length; i++){
         if(arr->A[i] == target){
             
             /** ways to improve the efficiency
              1. Transposition   // Target's priority slowly increases based on the # of times being searched
-              swap(&arr->A[i],&arr->A[i-1]);
-              return i-1;
+             swap(&arr->A[i],&arr->A[i-1]);
+             return i-1;
              2. Move to front/head  // Maximized the target's priority once it's searched
-              swap(&arr->A[i],&arr->A[0]);
-              return 0;
+             swap(&arr->A[i],&arr->A[0]);
+             return 0;
              */
             return i;
         }
@@ -71,7 +71,7 @@ int BinarySearch(struct Array arr, int target){
     int left = 0;
     int right = arr.length - 1;
     int mid = 0;
-        
+    
     while(left <= right){
         mid = left + (right-left) / 2; // prevent overflow
         if(arr.A[mid] == target){
@@ -87,7 +87,7 @@ int BinarySearch(struct Array arr, int target){
 
 // compare to iterative version, it requires more stack depth and overhead but more elegant
 int BinarySearchRecursion(struct Array arr, int target, int left, int right){
-
+    
     if(left > right){
         return -1;
     }
@@ -196,7 +196,7 @@ void ReverseForLoop(struct Array *arr){
 }
 
 void Rotate(struct Array *arr){
-        
+    
     int temp = arr->A[0];
     
     for(int i=0; i<arr->length; i++){
@@ -224,7 +224,7 @@ void InsertSorted(struct Array *arr, int element){
 }
 
 int isSorted(struct Array arr){
-        
+    
     for(int i=0; i<arr.length-2; i++){
         if(arr.A[i] > arr.A[i+1]){
             return 0;
@@ -285,17 +285,10 @@ struct Array * UnionUnsorted(struct Array arr1, struct Array arr2){
     
     struct Array * result = (struct Array *) malloc(sizeof(struct Array));
     int i, j, k;
-    if(arr1.length > arr2.length){
-        for(i=0; i<arr1.length; i++){
-            result->A[i] = arr1.A[i];
-        }
-        result->length = arr1.length;
-    } else{
-        for(i=0; i<arr2.length; i++){
-            result->A[i] = arr2.A[i];
-        }
-        result->length = arr2.length;
+    for(i=0; i<arr1.length; i++){
+        result->A[i] = arr1.A[i];
     }
+    result->length = arr1.length;
     
     for(j=0; j<arr2.length; j++){
         int flag = 0;
@@ -344,14 +337,14 @@ struct Array * UnionSorted(struct Array arr1, struct Array arr2){
     c->size = arr1.size + arr2.size;
     return c;
 }
-    
+
 // only applied for sets
 struct Array * IntersectUnsorted(struct Array arr1, struct Array arr2){
     
     struct Array * result = (struct Array *) malloc(sizeof(struct Array));
     result->length = 0;
     int i=0, j=0, k=0;
-       
+    
     for(; i<arr1.length; i++){
         for(j=0; j<arr2.length; j++){
             if(arr1.A[i] == arr2.A[j]){
@@ -391,7 +384,7 @@ struct Array * DifferenceUnsorted(struct Array arr1, struct Array arr2){
     struct Array * result = (struct Array *) malloc(sizeof(struct Array));
     result->length = 0;
     int i=0, j=0, k=0;
-       
+    
     for(; i<arr1.length; i++){
         int flag = 0;
         for(j=0; j<arr2.length; j++){
