@@ -205,11 +205,6 @@ void Rotate(struct Array *arr){
     arr->A[arr->length-1] = temp;
 }
 
-
-/**
- Binary Operation for 2 arrays
- */
-
 // this function is only used for a sorted array
 // after insertion the order is kept sored
 void InsertSorted(struct Array *arr, int element){
@@ -254,6 +249,10 @@ void SeparateNegative(struct Array *arr){
         }
     }
 }
+
+/**
+ Binary Operation for 2 arrays
+ */
 
 // keep sorted
 struct Array * Merge(struct Array arr1, struct Array arr2){
