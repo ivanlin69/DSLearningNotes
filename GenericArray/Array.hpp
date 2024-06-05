@@ -28,7 +28,7 @@ public:
     void Display() const ;
     
     Array<T> & operator=(const Array<T> &other);
-    T & operator[](size_t index);
+    const T & operator[](size_t index) const;
     
     ~Array(){
         delete [] A;

@@ -17,9 +17,12 @@ int main(int argc, const char * argv[]) {
     
     Array<float> * b = new Array<float>({21.1f, 234.3f, 443.5f, 1567.1});
     b->Display();
-    b = a;
+    *b = *a;
     b->Display();
     std::cout << (*b)[0] << " " << (*b)[1] << std::endl;
+    
+    delete a;
+    //delete b;
     
     return 0;
 }

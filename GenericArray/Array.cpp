@@ -90,8 +90,8 @@ void Array<T>::Display() const{
 }
 
 template<class T>
-Array<T> & Array<T>::operator=(const Array & other){
-    if(*this == other){
+Array<T> & Array<T>::operator=(const Array<T> & other){
+    if(this == &other){
         return *this;
     }
     
@@ -107,7 +107,8 @@ Array<T> & Array<T>::operator=(const Array & other){
 }
 
 template<class T>
-T & Array<T>::operator[](size_t index){
+// read-only
+const T & Array<T>::operator[](size_t index) const {
     if(index >= length){
         throw std::out_of_range("index out of range.");
     }
