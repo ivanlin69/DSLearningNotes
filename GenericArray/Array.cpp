@@ -114,3 +114,183 @@ const T & Array<T>::operator[](size_t index) const {
     }
     return A[index];
 }
+
+template<class T>
+void Array<T>::MissingElements(){
+    size_t diff = A[0];
+    for(size_t i=0; i<length; i++){
+        size_t newDiff = A[i] - i;
+        if(newDiff != diff){
+            size_t count = newDiff - diff;
+            for(size_t j=1; j<=count; j++){
+                std::cout << A[i-1] + j << " ";
+            }
+            diff = newDiff;
+        }
+    }
+}
+
+// concept of hashing (trade off: space and time)
+template<class T>
+void Array<T>::MissingElementsUnsorted(){
+    size_t max = A[0];
+    for(size_t i=1; i<length; i++){
+        if(A[i] > max){
+            max = A[i];
+        }
+    }
+    
+    int hashing[max+1];
+    for(size_t i=0; i<max+1; i++){
+        hashing[i] = 0;
+    }
+    
+    for(size_t i=0; i<length; i++){
+        hashing[A[i]] = 1;
+    }
+    
+    for(size_t i=1; i<max; i++){
+        if(hashing[i] == 0){
+            std::cout << i << " ";
+        }
+    }
+}
+
+template<class T>
+void Array<T>::FindDuplicateSorted(){
+    for(size_t i=0; i<length-1; i++){
+        if(A[i] == A[i+1]){
+            size_t j=i+1;
+            while(A[j] == A[i]){
+                j++;
+            }
+            std::cout << A[i] << ": There is(are) " << j-i-1 << " duplicate(s)\n";
+            i = j-1; // Note that we need to return i to the normal end state
+            // edge case: consecutive duplicates
+        }
+    }
+}
+
+
+template<class T>
+void Array<T>::FindDuplicateUnsorted(){
+    
+    for(size_t i=0; i<length-1; i++){
+        if(A[i] != -1){
+            size_t count = 0;
+            for(size_t j = i+1; j<length; j++){
+                if(A[i] == A[j]){
+                    count++;
+                    A[j] = -1;
+                }
+            }
+            if(count > 0){
+                std::cout << A[i] << ": There is(are) " << count << " duplicate(s)\n";
+            }
+        }
+    }
+    
+    
+}
+
+template<class T>
+void Array<T>::FindDuplicateUnsortedHashing(){
+    int max = A[0];
+    for(size_t i=1; i<length; i++){
+        if(A[i] > max){
+            max = A[i];
+        }
+    }
+    
+    T hashing[max+1];
+    for(size_t i=0; i<max+1; i++){
+        hashing[i] = 0;
+    }
+    
+    for(size_t i=0; i<length; i++){
+        hashing[A[i]]++;
+    }
+    
+    for(size_t i=0; i<max; i++){
+        if(hashing[i] > 1){
+            std::cout << i << ": There is(are) " << hashing[i]-1 << " duplicate(s)\n";
+        }
+    }
+}
+
+template<class T>
+void Array<T>::TwoSumUnsorted(size_t sum){
+    int found = 0;
+    for(size_t i=0; i<length-1; i++){
+        for(size_t j=i+1; j<length; j++){
+            if(A[i] + A[j] == sum){
+                found = 1;
+                std::cout << A[i] << " and " << A[j] << std::endl;
+            }
+        }
+    }
+    if(found != 1){
+        std::cout << "No such pair." << std::endl;
+    }
+}
+
+template<class T>
+void Array<T>::TwoSumUnsortedHashing(size_t sum){
+    int max = A[0];
+    for(size_t i=1; i<length; i++){
+        if(A[i] > max){
+            max = A[i];
+        }
+    }
+    
+    T hashing[max+1];
+    for(size_t i=0; i<max+1; i++){
+        hashing[i] = 0;
+    }
+    int found = 0;
+    for(size_t i=0; i<length; i++){
+        hashing[A[i]]++;
+        if((sum-A[i]) >= 0 && hashing[(sum-A[i])] > 0){
+            std::cout << A[i] << " and " << (sum-A[i]) << std::endl;
+            found = 1;
+        }
+    }
+    if(found != 1){
+        std::cout << "No such pair." << std::endl;
+    }
+}
+
+template<class T>
+void Array<T>::TwoSumSorted(size_t sum){
+    
+    size_t i=0, j=length-1, found=0;
+    
+    while(j>i){
+        if(A[i] + A[j] == sum){
+            found = 1;
+            std::cout << A[i++] << " and " << A[j--] << std::endl;
+        } else if(A[i] + A[j] > sum){
+            j--;
+        } else{
+            i++;
+        }
+    }
+    if(found != 1){
+        std::cout << "No such pair." << std::endl;
+    }
+    
+}
+
+template<class T>
+void Array<T>::FindMaxMin(){
+    int max=A[0], min=A[0];
+    for(size_t i=1; i<length; i++){
+        if(A[i] > max){
+            max = A[i];
+        } else if(A[i] < min){
+            min = A[i];
+        }
+    }
+    std::cout << "Max: " << max << " min: " << min << std::endl;
+}
+

@@ -30,6 +30,18 @@ public:
     Array<T> & operator=(const Array<T> &other);
     const T & operator[](size_t index) const;
     
+    void MissingElements();
+    void MissingElementsUnsorted();
+    void FindDuplicateSorted();
+    void FindDuplicateUnsorted();
+    void FindDuplicateUnsortedHashing();
+    
+    void TwoSumUnsorted(size_t sum);
+    void TwoSumUnsortedHashing(size_t sum);
+    void TwoSumSorted(size_t sum);
+    
+    void FindMaxMin();
+    
     ~Array(){
         delete [] A;
     }
