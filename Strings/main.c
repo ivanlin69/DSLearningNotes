@@ -6,18 +6,18 @@ size_t Length(const char* str){
     return i;
 }
 
-void Capitalized(char* str){
+void Uncapitalized(char* str){
     for(size_t i=0; str[i]!='\0'; i++){
         if(str[i] >= 65 && str[i] <= 90){
-            str[i] -= 32;
+            str[i] += 32;
         }
     }
 }
 
-void Uncaptalized(char* str){
+void Capitalized(char* str){
    for(size_t i=0; str[i]!='\0'; i++){
        if(str[i] >= 97 && str[i] <= 122){
-           str[i] += 32;
+           str[i] -= 32;
        }
    }
 }
@@ -49,6 +49,16 @@ size_t CountWords(const char* str){
     return count;
 }
 
+void Reverse(char* str){
+    size_t l = Length(str);
+    // Note '\0' might show up during the XOR process. Avoid directly using Length(str)
+    for(size_t i=0; i<l/2; i++){
+        str[i] = str[i] ^ str[l-1-i];
+        str[l-1-i] = str[i] ^ str[l-1-i];
+        str[i] = str[i] ^ str[l-1-i];
+    }
+}
+
 int main(int argc, const char * argv[]) {
     
     char a[100] = {'j', 'o', 'h', 'n', '\0'};
@@ -68,10 +78,15 @@ int main(int argc, const char * argv[]) {
      printf("%s \n", a);
      */
     
-    char str[100] = "John   is   rich  .  ";
+    char str[100] = "John   is   rich  . gf";
+    //Capitalized(str);
+    //Uncapitalized(str);
+    //Toggle(str);
     printf("%s\n", str);
+    printf("The length of the string is: %zu\n", Length(str));
+    printf("The # of words is: %zu\n", CountWords(str));
     
-    
-    
+    Reverse(str);
+    printf("%s\n", str);
     return 0;
 }
