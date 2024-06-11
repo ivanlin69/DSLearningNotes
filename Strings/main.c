@@ -17,21 +17,21 @@ void Uncapitalized(char* str){
 }
 
 void Capitalized(char* str){
-   for(size_t i=0; str[i]!='\0'; i++){
-       if(str[i] >= 97 && str[i] <= 122){
-           str[i] -= 32;
-       }
-   }
+    for(size_t i=0; str[i]!='\0'; i++){
+        if(str[i] >= 97 && str[i] <= 122){
+            str[i] -= 32;
+        }
+    }
 }
 
 void Toggle(char* str){
-   for(size_t i=0; str[i]!='\0'; i++){
-       if(str[i] >= 65 && str[i] <= 90){
-           str[i] += 32;
-       } else if(str[i] >= 97 && str[i] <= 122){
-           str[i] -= 32;
-       }
-   }
+    for(size_t i=0; str[i]!='\0'; i++){
+        if(str[i] >= 65 && str[i] <= 90){
+            str[i] += 32;
+        } else if(str[i] >= 97 && str[i] <= 122){
+            str[i] -= 32;
+        }
+    }
 }
 
 size_t CountWords(const char* str){
@@ -151,7 +151,7 @@ void FindDuplicateBitsOperation(const char* str){
         }
     }
 }
-
+// can handle duplicates, if no duplicates is confirmed, we can use bitset
 int Anagram(const char* str1, const char* str2){
     
     if(Length(str1) != Length(str2)){
@@ -173,25 +173,84 @@ int Anagram(const char* str1, const char* str2){
     if(max1 != max2){
         return 0;
     }
+    /**
+     Method1: using 2 hashing
+     
+     // assume inputs >= 65 'A'
+     size_t hashing1[max1+1-65];
+     size_t hashing2[max1+1-65];
+     for(size_t i=0; i<max1+1-65; i++){
+     hashing1[i] = 0;
+     hashing2[i] = 0;
+     }
+     // or using memcpy(hashing2, hashing1, sizeof(size_t)*(max1+1)); to initialize the second array
+     
+     for(size_t i=0; str1[i]!='\0'; i++){
+     hashing1[str1[i]-65]++;
+     hashing2[str2[i]-65]++;
+     }
+     for(size_t i=0; i < max1+1-65; i++){
+     if(hashing1[i] != hashing2[i]){
+     return 0;
+     }
+     }
+     */
     
-    size_t hashing1[max1+1];
-    size_t hashing2[max1+1];
-    for(size_t i=0; i<max1+1; i++){
+    //Method2: Only 1 hashing, concept of counting
+    int hashing1[max1+1-65];
+    for(size_t i=0; i<max1+1-65; i++){
         hashing1[i] = 0;
-        hashing2[i] = 0;
     }
-    // or using memcpy(hashing2, hashing1, sizeof(size_t)*(max1+1)); to initialize the second array
     
     for(size_t i=0; str1[i]!='\0'; i++){
-        hashing1[str1[i]]++;
-        hashing2[str2[i]]++;
+        hashing1[str1[i]-65]++;
     }
-    for(size_t i=0; i < max1+1; i++){
-        if(hashing1[i] != hashing2[i]){
+    for(size_t i=0; str2[i]!='\0'; i++){
+        hashing1[str2[i]-65]--;
+        if(hashing1[str2[i]-65] == -1){
             return 0;
         }
     }
     return 1;
+}
+
+// initiate with (str, 0)
+void Permutation(char* str, size_t k){
+    static size_t hashing[20];
+    static char result[20];
+    
+    if(k==Length(str)){
+        result[k] = '\0';
+        printf("%s\n", result);
+    } else{
+        for(size_t i=0; i<Length(str); i++){
+            if(hashing[i] == 0){
+                hashing[i]++;
+                result[k] = str[i];
+                Permutation(str, k+1);
+                hashing[i]--;
+            }
+        }
+    }
+}
+
+void Swap(char* c1, char* c2){
+    char t = *c1;
+    *c1 = *c2;
+    *c2 = t;
+}
+
+void PermutationSwap(char* str, size_t low, size_t high){
+    
+    if(low==high){
+        printf("%s\n", str);
+    } else {
+        for(size_t i=low; i<Length(str); i++){
+            Swap(&str[i], &str[low]);
+            PermutationSwap(str, low+1, high);
+            Swap(&str[i], &str[low]);
+        }
+    }
 }
 
 int main(int argc, const char * argv[]) {
@@ -212,36 +271,41 @@ int main(int argc, const char * argv[]) {
      fgets(a, sizeof(a), stdin);
      printf("%s \n", a);
      
+     
+     char str[100] = "John   is   rich  . gf";
+     //Capitalized(str);
+     //Uncapitalized(str);
+     //Toggle(str);
+     printf("%s\n", str);
+     printf("The length of the string is: %zu\n", Length(str));
+     printf("The # of words is: %zu\n", CountWords(str));
+     
+     Reverse(str);
+     printf("%s\n", str);
+     
+     char str2[20] = "asdffdsa";
+     char str3[20] = "asdffesa";
+     printf("%s\n", str2);
+     printf("Is palindrome?: %d\n", Palindrome(str2));
+     
+     printf("Compare: %zu\n", Compare(str3, str2));
+     
+     char str4[20] = "asdfAAfweraesaaB";
+     FindDuplicate(str4);
+     FindDuplicateBitsOperation(str4);
+     
+     printf("Size of long long: %zu\n", sizeof(long long));
+     
+     
+     char str5[20] = "asdfghjdkd";
+     char str6[20] = "kjhgfdscad";
+     
+     printf("Are 2 strings anagram: %d\n", Anagram(str5, str6));
+     */
     
-    char str[100] = "John   is   rich  . gf";
-    //Capitalized(str);
-    //Uncapitalized(str);
-    //Toggle(str);
-    printf("%s\n", str);
-    printf("The length of the string is: %zu\n", Length(str));
-    printf("The # of words is: %zu\n", CountWords(str));
-    
-    Reverse(str);
-    printf("%s\n", str);
-    
-    char str2[20] = "asdffdsa";
-    char str3[20] = "asdffesa";
-    printf("%s\n", str2);
-    printf("Is palindrome?: %d\n", Palindrome(str2));
-    
-    printf("Compare: %zu\n", Compare(str3, str2));
-    
-    char str4[20] = "asdfAAfweraesaaB";
-    FindDuplicate(str4);
-    FindDuplicateBitsOperation(str4);
-    
-    printf("Size of long long: %zu\n", sizeof(long long));
-    */
-    
-    char str5[20] = "asdfghjkd";
-    char str6[20] = "kjhgfdsad";
-    
-    printf("Are 2 strings anagram: %d\n", Anagram(str5, str6));
+    char str7[20] = "ABC";
+    Permutation(str7, 0);
+    // PermutationSwap(str7, 0, Length(str7));
     
     return 0;
 }
