@@ -27,4 +27,18 @@ public:
     ~LowerTriangularMatrix();
 };
 
+class TriDiagonalMatrix{
+private:
+    int *A;
+    size_t size;
+public:
+    TriDiagonalMatrix(size_t size);
+    size_t GetIndex(size_t x, size_t y);
+    int Get(size_t x, size_t y);
+    void Set(size_t x, size_t y, int value);
+    void Display();
+    ~TriDiagonalMatrix();
+};
+
+
 #endif /* DiagonalMatrix_hpp */
