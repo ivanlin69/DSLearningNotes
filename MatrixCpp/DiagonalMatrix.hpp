@@ -40,5 +40,31 @@ public:
     ~TriDiagonalMatrix();
 };
 
+class SparseElement{
+public:
+    size_t row;
+    size_t col;
+    int value;
+    SparseElement(){}
+    SparseElement(size_t r, size_t c, int v);
+    ~SparseElement(){}
+};
+
+class SparseMatrix{
+private:
+    size_t rowLength;
+    size_t colLength;
+    size_t size;
+    size_t length;
+    SparseElement *A;
+
+public:
+    SparseMatrix(size_t r, size_t c, size_t s, size_t l);
+    void AddElement(SparseElement e);
+    static SparseMatrix * Adding(SparseMatrix *m1, SparseMatrix *m2);
+    void Display();
+    ~SparseMatrix();
+};
+
 
 #endif /* DiagonalMatrix_hpp */

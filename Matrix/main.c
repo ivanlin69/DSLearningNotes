@@ -195,9 +195,9 @@ struct SparseMatrix * Adding(struct SparseMatrix *m, struct SparseMatrix *other)
     }
     
     for(; i<m->length; i++){
-        sm->A[i].row = other->A[i].row;
-        sm->A[i].col = other->A[i].col;
-        sm->A[i].value = other->A[i].value;
+        sm->A[i].row = m->A[i].row;
+        sm->A[i].col = m->A[i].col;
+        sm->A[i].value = m->A[i].value;
         sm->length++;
     }
     
@@ -277,6 +277,10 @@ int main(int argc, const char * argv[]) {
     
     struct SparseMatrix *r = Adding(&m, &other);
     DisplaySparse(r);
+    
+    free(m.A);
+    free(other.A);
+    free(r);
     
     return 0;
     
