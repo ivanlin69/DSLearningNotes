@@ -157,7 +157,7 @@ void DisplaySparse(struct SparseMatrix *m){
         printf("\n");
     }
 }
-
+// only applys when 2 matrixs are the same size
 struct SparseMatrix * Adding(struct SparseMatrix *m, struct SparseMatrix *other){
     if(m->rowLength != other->rowLength || m->colLength != other->colLength){
         return NULL;
@@ -186,25 +186,20 @@ struct SparseMatrix * Adding(struct SparseMatrix *m, struct SparseMatrix *other)
             } else if(m->A[i].col > other->A[j].col){
                 sm->A[index++] = other->A[j++];
             } else{
-                sm->A[index].row = m->A[i].row;
-                sm->A[index].col = m->A[i].col;
-                sm->A[index++].value = m->A[i++].value + other->A[j++].value;
+                sm->A[index] = m->A[i++];
+                sm->A[index++].value += other->A[j++].value;
             }
         }
         sm->length++;
     }
     
     for(; i<m->length; i++){
-        sm->A[i].row = m->A[i].row;
-        sm->A[i].col = m->A[i].col;
-        sm->A[i].value = m->A[i].value;
+        sm->A[i] = m->A[i];
         sm->length++;
     }
     
     for(; j<other->rowLength; j++){
-        sm->A[j].row = other->A[j].row;
-        sm->A[j].col = other->A[j].col;
-        sm->A[j].value = other->A[j].value;
+        sm->A[j] = other->A[j];
         sm->length++;
     }
     
