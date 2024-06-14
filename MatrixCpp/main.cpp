@@ -67,8 +67,14 @@ int main(int argc, const char * argv[]) {
     
     printf("\n");
     
-    SparseMatrix *r = SparseMatrix::Adding(&m, &other);
-    r->Display();
+    SparseMatrix r = SparseMatrix::Adding(m, other);
+    SparseMatrix r2 = m + other;
+    
+    r.Display();
+    
+    printf("\n");
+    
+    r2.Display();
     
     return 0;
 }

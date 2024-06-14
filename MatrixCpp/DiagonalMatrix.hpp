@@ -61,7 +61,8 @@ private:
 public:
     SparseMatrix(size_t r, size_t c, size_t s, size_t l);
     void AddElement(SparseElement e);
-    static SparseMatrix * Adding(SparseMatrix *m1, SparseMatrix *m2);
+    SparseMatrix operator+(SparseMatrix &m);
+    static SparseMatrix Adding(SparseMatrix &m1, SparseMatrix &m2);
     void Display();
     ~SparseMatrix();
 };

@@ -1,5 +1,6 @@
 #include "DiagonalMatrix.hpp"
 #include <cmath>
+#include <stdexcept>
 
 DiagonalMartix::DiagonalMartix(size_t size) : size(size){
     A = new int[size];
@@ -139,56 +140,95 @@ void SparseMatrix::AddElement(SparseElement e){
     }
 }
 
-SparseMatrix * SparseMatrix::Adding(SparseMatrix *m1, SparseMatrix *m2){
+SparseMatrix SparseMatrix::operator+(SparseMatrix &m){
     
-    if(m1->rowLength != m2->rowLength || m1->colLength != m2->colLength){
-        return NULL;
+    if(rowLength != m.rowLength || colLength != m.colLength){
+        return *this;
     }
     
     size_t i=0;
     size_t j=0;
     size_t index = 0;
     
-    struct SparseMatrix *sm = new SparseMatrix(m1->rowLength, m1->colLength,(m1->size + m2->size), 0);
+    struct SparseMatrix *sm = new SparseMatrix(rowLength, colLength,(size + m.size), 0);
     
-    while(i<m1->length && j<m2->length){
-        if(m1->A[i].row < m2->A[j].row){
-            sm->A[index++] = m2->A[i++];
-        } else if(m1->A[i].row > m2->A[j].row){
-            sm->A[index++] = m1->A[j++];
+    while(i<length && j<m.length){
+        if(A[i].row < m.A[j].row){
+            sm->A[index++] = A[i++];
+        } else if(A[i].row > m.A[j].row){
+            sm->A[index++] = A[j++];
         } else{
-            if(m1->A[i].col < m2->A[j].col){
-                sm->A[index++] = m1->A[i++];
-            } else if(m1->A[i].col > m2->A[j].col){
-                sm->A[index++] = m2->A[j++];
+            if(A[i].col < m.A[j].col){
+                sm->A[index++] = A[i++];
+            } else if(A[i].col > m.A[j].col){
+                sm->A[index++] = m.A[j++];
             } else{
-                sm->A[index].row = m1->A[i].row;
-                sm->A[index].col = m1->A[i].col;
-                sm->A[index++].value = m1->A[i++].value + m2->A[j++].value;
+                sm->A[index] = A[i++];
+                sm->A[index++].value += m.A[j++].value;
             }
         }
         sm->length++;
     }
     
-    for(; i<m1->length; i++){
-        sm->A[i].row = m1->A[i].row;
-        sm->A[i].col = m1->A[i].col;
-        sm->A[i].value = m1->A[i].value;
+    for(; i<length; i++){
+        sm->A[i] = A[i];
         sm->length++;
     }
     
-    for(; j<m2->rowLength; j++){
-        sm->A[j].row = m2->A[j].row;
-        sm->A[j].col = m2->A[j].col;
-        sm->A[j].value = m2->A[j].value;
+    for(; j<m.rowLength; j++){
+        sm->A[j] = m.A[j];
         sm->length++;
     }
     
-    return sm;
-
-    
+    return *sm;
     
 }
+
+// only applys when 2 matrixs are the same size
+SparseMatrix SparseMatrix::Adding(SparseMatrix &m1, SparseMatrix &m2){
+    
+    if(m1.rowLength != m2.rowLength || m1.colLength != m2.colLength){
+        throw std::runtime_error("out of boundary.");
+    }
+    
+    size_t i=0;
+    size_t j=0;
+    size_t index = 0;
+    
+    struct SparseMatrix *sm = new SparseMatrix(m1.rowLength, m1.colLength,(m1.size + m2.size), 0);
+    
+    while(i<m1.length && j<m2.length){
+        if(m1.A[i].row < m2.A[j].row){
+            sm->A[index++] = m2.A[i++];
+        } else if(m1.A[i].row > m2.A[j].row){
+            sm->A[index++] = m1.A[j++];
+        } else{
+            if(m1.A[i].col < m2.A[j].col){
+                sm->A[index++] = m1.A[i++];
+            } else if(m1.A[i].col > m2.A[j].col){
+                sm->A[index++] = m2.A[j++];
+            } else{
+                sm->A[index] = m1.A[i++];
+                sm->A[index++].value += m2.A[j++].value;
+            }
+        }
+        sm->length++;
+    }
+    
+    for(; i<m1.length; i++){
+        sm->A[i] = m1.A[i];
+        sm->length++;
+    }
+    
+    for(; j<m2.rowLength; j++){
+        sm->A[j] = m2.A[j];
+        sm->length++;
+    }
+    
+    return *sm;
+}
+
+
 void SparseMatrix::Display(){
     size_t index = 0;
     for(size_t i=0; i<rowLength; i++){
