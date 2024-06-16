@@ -42,6 +42,53 @@ void AddFront(struct LinkedList * l, int e){
     l->length++;
 }
 
+void DeleteFront(struct LinkedList * l){
+    
+    if(l->head == NULL){
+        return;
+    } else if(l->head->next == NULL){
+        free(l->head);
+        l->head = NULL;
+        l->tail = NULL;
+    } else{
+        struct Node * temp = l->head;
+        l->head = l->head->next;
+        free(temp);
+    }
+    l->length--;
+}
+
+// delete the target value(first found)
+void Delete(struct LinkedList * l, int e){
+    
+    struct Node * temp = l->head;
+    if(!l->head)
+        return;
+    
+    if(temp->value == e){
+        DeleteFront(l);
+        return;
+    } 
+    
+    struct Node * prev = NULL;
+    while(temp){
+        if(temp->value == e){
+            break;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+    if(temp == NULL){
+        return;
+    }
+    if(temp->next == NULL){
+        l->tail = prev;
+    }
+    prev->next = temp->next;
+    free(temp);
+    l->length--;
+}
+
 void Insert(struct LinkedList * l, size_t index, int e){
     
     if(index < 0 || index > l->length){
@@ -198,6 +245,21 @@ struct Node * SearchMH(struct LinkedList *l, int value){
     return NULL;
 }
 
+int IsSorted(struct LinkedList * l){
+    if(l->head == NULL || l->head->next == NULL){
+        return 1;
+    }
+    struct Node * curr = l->head;
+    
+    while(curr->next){
+        if(curr->value > curr->next->value){
+            return 0;
+        }
+        curr = curr->next;
+    }
+    return 1;
+}
+
 
 
 int main(int argc, const char * argv[]) {
@@ -254,6 +316,16 @@ int main(int argc, const char * argv[]) {
     InsertSorted(&l2, 36);
     
     DisplayLL(&l2);
+    
+    DeleteFront(&l2);
+    DisplayLL(&l2);
+    
+    Delete(&l2, 105);
+    DisplayLL(&l2);
+    AddFront(&l2, 90);
+    DisplayLL(&l2);
+    
+    printf("Is sorted? : %d\n", IsSorted(&l2));
     
     return 0;
 }
