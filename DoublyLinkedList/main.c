@@ -90,6 +90,39 @@ void Insert(struct DoublyLL *dl, size_t index, int e){
 
 int Delete(struct DoublyLL *dl, size_t index){
     
+    int value = -1;
+    
+    if(dl->head == NULL || index < 0 || index > dl->length-1){
+        return value;
+    }
+    
+    struct Node * temp = dl->head;
+    
+    if(index == 0){
+        dl->head = dl->head->next;
+        // it might be only 1 element
+        if(temp->next != NULL){
+            dl->head->prev = NULL;
+        }
+
+    } else{
+        for(size_t i=0; i<index; i++){
+            temp = temp->next;
+        }
+        temp->prev->next = temp->next;
+        if(temp->next != NULL){
+            temp->next->prev = temp->prev;
+        }
+    }
+    value = temp->value;
+    free(temp);
+    dl->length--;
+    
+    return value;
+}
+
+void Reverse(struct DoublyLL *dl){
+    
     
 }
 
@@ -103,6 +136,9 @@ int main(int argc, const char * argv[]) {
     Display(&dl1);
     
     Insert(&dl1, 5, 88);
+    Display(&dl1);
+    
+    printf("Delete an element: %d \n", Delete(&dl1, 5));
     Display(&dl1);
     
     return 0;
