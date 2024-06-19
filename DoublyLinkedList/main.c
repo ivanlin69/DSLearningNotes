@@ -54,8 +54,41 @@ void Display(struct DoublyLL *dl){
 
 void Insert(struct DoublyLL *dl, size_t index, int e){
     
+    if(index < 0 || index > dl->length){
+        return;
+    }
     
+    struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
+    newNode->value = e;
+    newNode->next = NULL;
+    newNode->prev = NULL;
     
+    if(dl->length == 0){
+        dl->head = newNode;
+        
+    } else if(index == 0){
+        dl->head->prev = newNode;
+        newNode->next = dl->head;
+        newNode->prev = NULL;
+        dl->head = newNode;
+        
+    } else {
+        struct Node * temp = dl->head;
+        
+        for(size_t i=0; i<index-1; i++){
+            temp = temp->next;
+        }
+        newNode->next = temp->next;
+        if(temp->next != NULL){
+            temp->next->prev = newNode;
+        }
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+    dl->length++;
+}
+
+int Delete(struct DoublyLL *dl, size_t index){
     
     
 }
@@ -64,8 +97,12 @@ void Insert(struct DoublyLL *dl, size_t index, int e){
 int main(int argc, const char * argv[]) {
     
     struct DoublyLL dl1 = {NULL, 0};
+ 
     int A[] = {1, 3, 8, 16, 23};
     CreateDLL(&dl1, A, 5);
+    Display(&dl1);
+    
+    Insert(&dl1, 5, 88);
     Display(&dl1);
     
     return 0;
