@@ -31,6 +31,6 @@ This repository is created for educational purposes, providing implementations o
 - Array
 - Singly Linked List
 
-### License
+## License
 This project is licensed under the MIT License - see the [MIT License Documentation](https://opensource.org/licenses/MIT) for details.
 
