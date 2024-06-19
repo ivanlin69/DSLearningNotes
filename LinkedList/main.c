@@ -424,6 +424,14 @@ int HaveLoop(struct LinkedList * l){
     return 0;
 }
 
+void freeLinkedlist(struct LinkedList *l){
+    while(l->head){
+        struct Node * temp = l->head;
+        l->head = l->head->next;
+        free(temp);
+    }
+}
+
 
 int main(int argc, const char * argv[]) {
     /**
@@ -536,14 +544,16 @@ int main(int argc, const char * argv[]) {
     InsertSorted(&l5, 121);
     
     DisplayLL(&l5);
-    
+    /**
     struct LinkedList *merged = Merge2SortedLL(&l4, &l5);
     DisplayLL(merged);
     
     // create a loop
     merged->tail->next = merged->head->next;
     printf("Is a loop? : %d \n", HaveLoop(merged));
-    
+     */
+    freeLinkedlist(&l4);
+    freeLinkedlist(&l5);
     
     return 0;
 }
