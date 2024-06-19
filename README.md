@@ -17,6 +17,8 @@ This repository is created for educational purposes, providing implementations o
 ### C Implementations
 
 - Array
+- String
+- Matrix
 - Singly Linked List
 - Circular Linked List
 - Doubly Linked List
