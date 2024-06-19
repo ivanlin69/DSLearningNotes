@@ -1,4 +1,4 @@
-# Learning Notes -  Implementing Data Structures in C and C++
+# Learning Notes -  Implementing Data Structures in C/C++
 
 This repository contains implementations of various data structures in C and some in C++. The main goal of this repository is to serve as a learning resource and a personal reference. The code works but might not be perfect, and the memory deallocation methods are not always included for simplicity.
 
