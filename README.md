@@ -22,6 +22,7 @@ This repository is created for educational purposes, providing implementations o
 - Singly Linked List
 - Circular Linked List
 - Doubly Linked List
+- Circular Doubly Linked List
 - Stack (On-going)
 - Queue (On-going)
 - Binary Tree (On-going)
