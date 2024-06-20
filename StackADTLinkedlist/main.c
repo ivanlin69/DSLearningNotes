@@ -37,7 +37,7 @@ int Pop(struct Stack *s){
     return value;
 }
 
-int Peek(struct Stack *s, int index){
+int Peek(const struct Stack *s, int index){
     if(index <0 || index > s->top){
         printf("Index out of bound.\n");
         return -1;
@@ -49,7 +49,7 @@ int Peek(struct Stack *s, int index){
     return temp->value;
 }
 
-int Top(struct Stack *s){
+int Top(const struct Stack *s){
     if(s->top >= 0){
         return s->l->head->value;
     }
@@ -57,11 +57,11 @@ int Top(struct Stack *s){
     return -1;
 }
 
-int isEmpty(struct Stack *s){
+int isEmpty(const struct Stack *s){
     return s->top == -1;
 }
 
-int isFull(struct Stack *s){
+int isFull(const struct Stack *s){
     return s->top == s->size-1;
 }
 
