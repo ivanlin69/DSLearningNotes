@@ -8,6 +8,13 @@ struct Stack{
     int top;
 };
 
+void InitializeStack(struct Stack *s, int size){
+    
+    s->A = (int *) malloc(sizeof(int)*size);
+    s->size = size;
+    s->top = -1;
+}
+
 void Push(struct Stack *s, int e){
     if(s->top < s->size-1){
         s->A[++(s->top)] = e;
@@ -59,8 +66,9 @@ void FreeStack(struct Stack *s){
 
 int main(int argc, const char * argv[]) {
     
-    struct Stack s1 = {NULL, 6, -1};
-    s1.A = (int *) malloc(sizeof(int)*(s1.size));
+    struct Stack s1;
+    InitializeStack(&s1, 6);
+    
     printf("Is empty: %d \n", isEmpty(&s1));
     printf("Is full: %d \n", isFull(&s1));
     Push(&s1, 34);
@@ -77,7 +85,7 @@ int main(int argc, const char * argv[]) {
     printf("Top is: %d \n", Top(&s1));
     printf("Is empty: %d \n", isEmpty(&s1));
     
-    Pop(&s1);
+    printf("Pop again: %d \n", Pop(&s1));
     printf("Peek 0: %d \n", Peek(&s1, 0));
     printf("Peek 1: %d \n", Peek(&s1, 1));
     printf("Peek 2: %d \n", Peek(&s1, 2));
