@@ -2,7 +2,6 @@
 #include "Stack.hpp"
 
 int main(int argc, const char * argv[]) {
-    
     Stack s1(6);
     
     printf("Is empty: %d \n", s1.isEmpty());
