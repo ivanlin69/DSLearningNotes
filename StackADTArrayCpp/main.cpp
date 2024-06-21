@@ -86,6 +86,7 @@ std::string InfixToPostfix(std::string str){
     return result;
 }
 
+
 std::string InfixToPostfix_simple(std::string str){
     
     std::map<char, int> precedence;
@@ -105,16 +106,15 @@ std::string InfixToPostfix_simple(std::string str){
         if(precedence.count(c) > 0){
             if(s.isEmpty() || precedence.at(c) > precedence.at(s.Top())){
                 s.Push(c);
-            } else if(precedence.at(c) < precedence.at(s.Top())){
+                i++;
+            } else {
                 result.push_back(s.Pop());
-                s.Push(c);
-            } else{
-                s.Pop();
             }
         } else {
             result.push_back(c);
+            i++;
         }
-        i++;
+        
     }
     while(!s.isEmpty()){
         result.push_back(s.Pop());
@@ -157,7 +157,7 @@ int main(int argc, const char * argv[]) {
     std::string str2 = "((a+b)*c)-d^e^f";
     std::cout << "Infix to Postfix: " << InfixToPostfix(str2) << " \n";
     
-    std::string str3 = "a*b+c";
+    std::string str3 = "a+b*c-d/e";
     std::cout << "Infix to Postfix: " << InfixToPostfix_simple(str3) << " \n";
     
     
