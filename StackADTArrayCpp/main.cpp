@@ -1,7 +1,37 @@
 #include <iostream>
 #include "Stack.hpp"
 
+int Paranthesis(char * str){
+    
+    if(str == NULL){
+        return 1;
+    }
+    Stack s(30);
+    for(size_t i=0; str[i]!='\0'; i++){
+        
+        if(str[i] == '(' || str[i] == '[' || str[i] == '{'){
+            s.Push(str[i]);
+        } else if(str[i] == ')' || str[i] == ']' || str[i] == '}'){
+            
+            if(s.isEmpty()){
+                return 0;
+            }
+            
+            if((str[i] == ')' && s.Top() == '(') ||
+               (str[i] == ']' && s.Top() == '[') ||
+               (str[i] == '}' && s.Top() == '{')){
+                s.Pop();
+            } else {
+                return 0;
+            }
+        }
+    }
+    return s.isEmpty();
+}
+
 int main(int argc, const char * argv[]) {
+    
+    /**
     Stack s1(6);
     
     printf("Is empty: %d \n", s1.isEmpty());
@@ -26,6 +56,11 @@ int main(int argc, const char * argv[]) {
     printf("Peek 2: %d \n", s1.Peek(2));
     printf("Peek 3: %d \n", s1.Peek(3));
     printf("Peek 4: %d \n", s1.Peek(4));
-
+    */
+    
+    char str1[] = "[(a+b)*({c}-d)]";
+    printf("Is paranthesis passed: %d\n", Paranthesis(str1));
+    
+    
     return 0;
 }
