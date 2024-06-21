@@ -23,7 +23,8 @@ This repository is created for educational purposes, providing implementations o
 - Circular Linked List
 - Doubly Linked List
 - Circular Doubly Linked List
-- Stack (On-going)
+- Stack (with Array)
+- Stack (with Linked List)
 - Queue (On-going)
 - Binary Tree (On-going)
 - Binary Search Tree (On-going)
@@ -34,6 +35,8 @@ This repository is created for educational purposes, providing implementations o
 - Array
 - Matrix
 - Singly Linked List
+- Stack (with Array)
+- Stack (with Linked List)
 
 ## License
 This project is licensed under the MIT License - see the [MIT License Documentation](https://opensource.org/licenses/MIT) for details.
