@@ -31,6 +31,42 @@ int Paranthesis(char * str){
     return s.isEmpty();
 }
 
+// based on the stack, here only accept int values and results
+// only accept the case each operand is a single digit number
+int EvaluatePostfix(std::string str){
+    
+    size_t i = 0;
+    Stack s(30);
+    
+    while(i < str.length()){
+        char c = str.at(i);
+        if(c=='+' || c=='-' || c=='*' || c=='/'){
+            int o2 = s.Pop();
+            int o1 = s.Pop();
+            
+            switch (c){
+                case '+':
+                    s.Push(o1 + o2);
+                    break;
+                case '-':
+                    s.Push(o1 - o2);
+                    break;
+                case '*':
+                    s.Push(o1 * o2);
+                    break;
+                default:
+                    s.Push(o1 / o2);
+                    break;
+            }
+        } else {
+            s.Push(c - '0');
+        }
+        i++;
+    }
+    return s.Pop();
+}
+    
+    
 std::string InfixToPostfix(std::string str){
     
     std::map<int, int> outStack;
@@ -41,10 +77,15 @@ std::string InfixToPostfix(std::string str){
     outStack.insert({'*', 3});
     outStack.insert({'/', 3});
     outStack.insert({'^', 6});
-    outStack.insert({'n', 6});
+    outStack.insert({'!', 6});
+    // use l to represent log
     outStack.insert({'l', 6});
-    outStack.insert({'(', 7});
+    outStack.insert({'(', 9});
     outStack.insert({')', 0});
+    outStack.insert({'[', 8});
+    outStack.insert({']', -1});
+    outStack.insert({'{', 7});
+    outStack.insert({'}', -2});
     
     inStack.insert({'+', 2});
     inStack.insert({'-', 2});
@@ -54,6 +95,8 @@ std::string InfixToPostfix(std::string str){
     inStack.insert({'n', 5});
     inStack.insert({'l', 5});
     inStack.insert({'(', 0});
+    inStack.insert({'[', -1});
+    inStack.insert({'{', -2});
     
     Stack s(30);
     std::string result;
@@ -159,6 +202,13 @@ int main(int argc, const char * argv[]) {
     
     std::string str3 = "a+b*c-d/e";
     std::cout << "Infix to Postfix: " << InfixToPostfix_simple(str3) << " \n";
+    
+    std::string str4 = "[(a+b)*({c}-ld)]";
+    std::cout << "Infix to Postfix: " << InfixToPostfix(str4) << " \n";
+    
+    std::string str5 = "6324+-*";
+    std::cout << "Evaluate a Postfix: " << EvaluatePostfix(str5) << " \n";
+    
     
     
     return 0;
