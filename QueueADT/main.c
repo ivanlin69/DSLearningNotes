@@ -25,7 +25,7 @@ void Enqueue(struct Queue *q, int e){
 }
 
 int Dequeue(struct Queue *q){
-    if(q->rear == -1 || q->rear == q->first){
+    if(q->rear == q->first){
         printf("Queue is empty.\n");
         return -1;
     }
@@ -54,6 +54,14 @@ int Last(struct Queue *q){
     }
     printf("Queue is empty.\n");
     return -1;
+}
+
+void FreeQueue(struct Queue *q){
+    free(q->A);
+    q->A = NULL;
+    q->first = -1;
+    q->rear = -1;
+    q->size = 0;
 }
 
 int main(int argc, const char * argv[]) {
@@ -85,6 +93,7 @@ int main(int argc, const char * argv[]) {
     printf("Empty?: %d\n", isEmpty(&q1));
     printf("Full?: %d\n", isFull(&q1));
     
+    FreeQueue(&q1);
     
     return 0;
 }
