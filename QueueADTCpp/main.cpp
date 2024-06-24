@@ -1,9 +1,10 @@
 #include <iostream>
 #include "QueueADT.hpp"
+#include "QueueADT.cpp"
 
 int main(int argc, const char * argv[]) {
     
-    Queue q(5);
+    Queue<int> q(5);
     
     printf("Empty?: %d\n", q.isEmpty());
     printf("Full?: %d\n", q.isFull());

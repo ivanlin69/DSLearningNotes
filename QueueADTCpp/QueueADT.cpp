@@ -1,11 +1,13 @@
 #include "QueueADT.hpp"
 #include <iostream>
 
-Queue::Queue(int size) : first(-1), rear(-1), size(size){
-    A = new int[size];
+template<class T>
+Queue<T>::Queue(int size) : first(-1), rear(-1), size(size){
+    A = new T[size];
 }
 
-void Queue::Enqueue(int e){
+template<class T>
+void Queue<T>::Enqueue(T e){
     if(rear != size-1){
         A[++(rear)] = e;
     } else {
@@ -13,7 +15,8 @@ void Queue::Enqueue(int e){
     }
 }
 
-int Queue::Dequeue(){
+template<class T>
+T Queue<T>::Dequeue(){
     if(rear == first){
         std::cout << "Queue is empty.\n";
         return -1;
@@ -21,15 +24,18 @@ int Queue::Dequeue(){
     return A[(first++)+1];
 }
 
-int Queue::isEmpty(){
+template<class T>
+int Queue<T>::isEmpty(){
     return rear == first;
 }
 
-int Queue::isFull(){
+template<class T>
+int Queue<T>::isFull(){
     return rear == size-1;
 }
 
-int Queue::First(){
+template<class T>
+T Queue<T>::First(){
     if(!isEmpty()){
         return A[first+1];
     }
@@ -37,7 +43,8 @@ int Queue::First(){
     return -1;
 }
 
-int Queue::Last(){
+template<class T>
+T Queue<T>::Last(){
     if(!isEmpty()){
         return A[rear];
     }
@@ -45,6 +52,7 @@ int Queue::Last(){
     return -1;
 }
 
-Queue::~Queue(){
+template<class T>
+Queue<T>::~Queue(){
     delete [] A;
 }

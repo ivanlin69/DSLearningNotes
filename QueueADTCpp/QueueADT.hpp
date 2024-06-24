@@ -1,21 +1,22 @@
 #ifndef QueueADT_hpp
 #define QueueADT_hpp
 
+template<class T>
 class Queue{
 private:
-    int * A;
+    T * A;
     int first;
     int size;
     int rear;
     
 public:
     Queue(int size);
-    void Enqueue(int e);
-    int Dequeue();
+    void Enqueue(T e);
+    T Dequeue();
     int isEmpty();
     int isFull();
-    int First();
-    int Last();
+    T First();
+    T Last();
     ~Queue();
 };
 
