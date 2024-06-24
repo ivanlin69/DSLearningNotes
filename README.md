@@ -25,7 +25,8 @@ This repository is created for educational purposes, providing implementations o
 - Circular Doubly Linked List
 - Stack (with Array)
 - Stack (with Linked List)
-- Queue (On-going)
+- Queue (with Array)
+- Queue (with Circular Array)
 - Binary Tree (On-going)
 - Binary Search Tree (On-going)
 - Hash Table (On-going)
@@ -37,6 +38,8 @@ This repository is created for educational purposes, providing implementations o
 - Singly Linked List
 - Stack (with Array)
 - Stack (with Linked List)
+- Queue (with Array)
+- Queue (with Circular Array)
 
 ## License
 This project is licensed under the MIT License - see the [MIT License Documentation](https://opensource.org/licenses/MIT) for details.
