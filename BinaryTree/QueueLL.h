@@ -17,7 +17,7 @@ void CreateQueue(struct Queue *q){
     Initialize(q->A);
 }
 
-void EnQueue(struct Queue *q, int e){
+void EnQueue(struct Queue *q, struct TreeNode *e){
     if(AddEnd(q->A, e) == 0){
         q->rear++;
     } else {
@@ -25,15 +25,15 @@ void EnQueue(struct Queue *q, int e){
     }
 }
 
-int DeQueue(struct Queue *q){
+struct TreeNode * DeQueue(struct Queue *q){
     if(q->rear != -1){
-        int removed = q->A->head->value;
+        struct TreeNode * removed = q->A->head->value;
         DeleteFront(q->A);
         q->rear--;
         return removed;
     }
     printf("Queue is empty.\n");
-    return -1;
+    return NULL;
 }
 
 int IsEmpty(struct Queue *q){
@@ -43,22 +43,6 @@ int IsEmpty(struct Queue *q){
 int IsFull(struct Queue *q){
     struct Node * temp = (struct Node *) malloc(sizeof(struct Node));
     return !temp;
-}
-
-int First(struct Queue *q){
-    if(!IsEmpty(q)){
-        return q->A->head->value;
-    }
-    printf("Queue is empty.\n");
-    return -1;
-}
-
-int Last(struct Queue *q){
-    if(!IsEmpty(q)){
-        return q->A->tail->value;;
-    }
-    printf("Queue is empty.\n");
-    return -1;
 }
 
 void FreeQueue(struct Queue *q){

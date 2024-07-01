@@ -8,7 +8,7 @@ void Initialize(struct LinkedList *l){
     l->tail = NULL;
 }
 
-int AddEnd(struct LinkedList * l, int e){
+int AddEnd(struct LinkedList * l, struct TreeNode * e){
     struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
     if(newNode == NULL){
         printf("malloc failed.\n");
@@ -28,7 +28,7 @@ int AddEnd(struct LinkedList * l, int e){
     return 0;
 }
 
-int AddFront(struct LinkedList * l, int e){
+int AddFront(struct LinkedList * l, struct TreeNode * e){
     struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
     if(newNode == NULL){
         printf("malloc failed.\n");
@@ -90,7 +90,7 @@ void Delete(struct LinkedList * l, size_t index){
     l->length--;
 }
 
-int Insert(struct LinkedList * l, size_t index, int e){
+int Insert(struct LinkedList * l, size_t index, struct TreeNode * e){
     
     if(index < 0 || index > l->length){
         printf("Index out of bound.\n");
@@ -116,145 +116,6 @@ int Insert(struct LinkedList * l, size_t index, int e){
         t->next = newNode;
     }
     l->length++;
-    return 0;
-}
-
-// only applied fot an sorted linkedlist
-int InsertSorted(struct LinkedList * l, int e){
-
-    struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
-    if(newNode == NULL){
-        printf("malloc failed.\n");
-        return -1;
-    }
-    newNode->value = e;
-    newNode->next = NULL;
-    
-    if(l->head == NULL){
-        l->head = newNode;
-        l->tail = newNode;
-    } else{
-        struct Node * temp = l->head;
-        if(temp->value > e){
-            newNode->next = l->head;
-            l->head = newNode;
-        } else{
-            while(temp->next != NULL && temp->next->value < e){
-                temp = temp->next;
-            }
-            newNode->next = temp->next;
-            if(temp->next == NULL){
-                l->tail = newNode;
-            }
-            temp->next = newNode;
-        }
-    }
-    l->length++;
-    return 0;
-}
-
-void DisplayLL(struct LinkedList * l){
-    struct Node * temp = l->head;
-    
-    while(temp != NULL){
-        printf("%d ", temp->value);
-        temp = temp->next;
-    }
-    printf("\n");
-}
-
-int Sum(struct LinkedList * l){
-    struct Node * temp = l->head;
-    int sum=0;
-    
-    while(temp){
-        sum += temp->value;
-        temp = temp->next;
-    }
-    return sum;
-}
-
-int Max(struct LinkedList * l){
-    struct Node * temp = l->head;
-    int max=temp->value;
-    
-    while(temp){
-        if(max < temp->value){
-            max = temp->value;
-        }
-        temp = temp->next;
-    }
-    return max;
-}
-
-
-struct Node * Search(struct LinkedList *l, int value){
-    struct Node * temp = l->head;
-    while(temp) {
-        if(temp->value == value){
-            return temp;
-        }
-        temp = temp->next;
-    }
-    return NULL;
-}
-
-
-int IsSorted(struct LinkedList * l){
-    if(l->head == NULL || l->head->next == NULL){
-        return 1;
-    }
-    struct Node * curr = l->head;
-    
-    while(curr->next){
-        if(curr->value > curr->next->value){
-            return 0;
-        }
-        curr = curr->next;
-    }
-    return 1;
-}
-
-void Reverse(struct LinkedList * l){
-    
-    if(l->head == NULL || l->head->next == NULL){
-        return;
-    }
-    struct Node * curr = l->head;
-    struct Node * next;
-    l->tail = curr;
-    
-    while(curr->next){
-        next = curr->next;
-        curr->next = next->next;
-        next->next = l->head;
-        l->head = next;
-    }
-}
-
-
-int HaveLoop(struct LinkedList * l){
-    
-    struct Node * p = l->head;
-    struct Node * q = l->head;
-    
-    if(p == NULL || p->next == NULL){
-        return 0;
-    }
-    
-    while(p && q){
-        p = p->next;
-        q = q->next;
-        
-        if(q) {
-            // q moves faster
-            q = q->next;
-        }
-        
-        if(p == q){
-            return 1;
-        }
-    }
     return 0;
 }
 

@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node{
+struct TreeNode{
+    struct TreeNode * left;
+    struct TreeNode * right;
     int value;
+};
+
+struct Node{
+    struct TreeNode *value;
     struct Node *next;
 };
 
@@ -13,20 +19,10 @@ struct LinkedList{
 };
 
 void Initialize(struct LinkedList *l);
-int AddEnd(struct LinkedList * l, int e);
-int AddFront(struct LinkedList * l, int e);
+int AddEnd(struct LinkedList * l, struct TreeNode * e);
+int AddFront(struct LinkedList * l, struct TreeNode * e);
 void DeleteFront(struct LinkedList * l);
 void Delete(struct LinkedList * l, size_t index);
-int Insert(struct LinkedList * l, size_t index, int e);
+int Insert(struct LinkedList * l, size_t index, struct TreeNode * e);
 
-// only applied fot an sorted linkedlist
-int InsertSorted(struct LinkedList * l, int e);
-
-void DisplayLL(struct LinkedList * l);
-int Sum(struct LinkedList * l);
-int Max(struct LinkedList * l);
-struct Node * Search(struct LinkedList *l, int value);
-int IsSorted(struct LinkedList * l);
-void Reverse(struct LinkedList * l);
-int HaveLoop(struct LinkedList * l);
 void freeLinkedlist(struct LinkedList *l);
