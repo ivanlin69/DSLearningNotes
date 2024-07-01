@@ -1,3 +1,6 @@
+#ifndef LinkedList_h
+#define LinkedList_h
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,3 +33,5 @@ int IsSorted(struct LinkedList * l);
 void Reverse(struct LinkedList * l);
 int HaveLoop(struct LinkedList * l);
 void freeLinkedlist(struct LinkedList *l);
+
+#endif /* LinkedList_h */

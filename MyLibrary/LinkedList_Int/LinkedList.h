@@ -1,3 +1,6 @@
+#ifndef LinkedList_h
+#define LinkedList_h
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,8 +18,8 @@ struct LinkedList{
 void Initialize(struct LinkedList *l);
 int AddEnd(struct LinkedList * l, int e);
 int AddFront(struct LinkedList * l, int e);
-int DeleteFront(struct LinkedList * l);
-int Delete(struct LinkedList * l, size_t index);
+void DeleteFront(struct LinkedList * l);
+void Delete(struct LinkedList * l, size_t index);
 int Insert(struct LinkedList * l, size_t index, int e);
 
 // only applied fot an sorted linkedlist
@@ -30,3 +33,5 @@ int IsSorted(struct LinkedList * l);
 void Reverse(struct LinkedList * l);
 int HaveLoop(struct LinkedList * l);
 void freeLinkedlist(struct LinkedList *l);
+
+#endif /* LinkedList_h */
