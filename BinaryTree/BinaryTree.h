@@ -28,7 +28,7 @@ void CreateBinaryTree(struct BinaryTree *b){
     while(!IsEmpty(b->q)){
         struct TreeNode * curr = DeQueue(b->q);
         
-        printf("Enter the left child's value(-1 if NULL):\n");
+        printf("Enter %d's left child's value(-1 if NULL):\n", curr->value);
         scanf("%d", &x);
         if(x != -1){
             curr->left = (struct TreeNode *) malloc(sizeof(struct TreeNode));
@@ -38,7 +38,7 @@ void CreateBinaryTree(struct BinaryTree *b){
             EnQueue(b->q, curr->left);
         }
         
-        printf("Enter the right child's value(-1 if NULL):\n");
+        printf("Enter %d's the right child's value(-1 if NULL):\n", curr->value);
         scanf("%d", &x);
         if(x != -1){
             curr->right = (struct TreeNode *) malloc(sizeof(struct TreeNode));
@@ -63,17 +63,17 @@ void DisplayInOrder(struct TreeNode *t){
     if(t == NULL){
         return;
     }
-    DisplayPreOrder(t->left);
+    DisplayInOrder(t->left);
     printf("%d ", t->value);
-    DisplayPreOrder(t->right);
+    DisplayInOrder(t->right);
 }
 
 void DisplayPostOrder(struct TreeNode *t){
     if(t == NULL){
         return;
     }
-    DisplayPreOrder(t->left);
-    DisplayPreOrder(t->right);
+    DisplayPostOrder(t->left);
+    DisplayPostOrder(t->right);
     printf("%d ", t->value);
 }
 

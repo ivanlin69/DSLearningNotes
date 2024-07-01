@@ -11,5 +11,13 @@ int main(int argc, const char * argv[]) {
     DisplayPreOrder(b->root);
     printf("\n");
     
+    printf("Tree traverse - InOrder:\n");
+    DisplayInOrder(b->root);
+    printf("\n");
+    
+    printf("Tree traverse - PostOrder:\n");
+    DisplayPostOrder(b->root);
+    printf("\n");
+    
     return 0;
 }
