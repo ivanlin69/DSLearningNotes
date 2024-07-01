@@ -15,14 +15,14 @@ struct TreeNode{
 template<class T>
 class BinaryTree{
 private:
+    TreeNode<T> * root;
     void HelperDisplayPreOrder(TreeNode<T> *t);
     void HelperDisplayInOrder(TreeNode<T> *t);
     void HelperDisplayPostOrder(TreeNode<T> *t);
     void FreeTree(TreeNode<T> *t);
     
 public:
-    TreeNode<T> * root;
-    Queue<TreeNode<T> *> * q;
+    
     
     BinaryTree(int size);
     

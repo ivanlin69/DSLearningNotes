@@ -5,7 +5,7 @@ template<class T>
 BinaryTree<T>::BinaryTree(int size){
 
     root = new TreeNode<T>();
-    q = new Queue<TreeNode<T> *>(size);
+    Queue<TreeNode<T> *> q(size);
     
     int x;
     std::cout << "Enter root value:\n";
@@ -14,10 +14,10 @@ BinaryTree<T>::BinaryTree(int size){
     root->value = x;
     root->right = NULL;
     root->left = NULL;
-    q->Enqueue(root);
+    q.Enqueue(root);
     
-    while(!q->isEmpty()){
-        TreeNode<T> * curr = q->Dequeue();
+    while(!q.isEmpty()){
+        TreeNode<T> * curr = q.Dequeue();
         
         printf("Enter %d's left child's value(-1 if NULL):\n", curr->value);
         std::cin >> x;
@@ -26,7 +26,7 @@ BinaryTree<T>::BinaryTree(int size){
             curr->left->value = x;
             curr->left->left = NULL;
             curr->left->right = NULL;
-            q->Enqueue(curr->left);
+            q.Enqueue(curr->left);
         }
         
         printf("Enter %d's the right child's value(-1 if NULL):\n", curr->value);
@@ -36,7 +36,7 @@ BinaryTree<T>::BinaryTree(int size){
             curr->right->value = x;
             curr->right->left = NULL;
             curr->right->right = NULL;
-            q->Enqueue(curr->right);
+            q.Enqueue(curr->right);
         }
     }
 }
@@ -89,7 +89,6 @@ void BinaryTree<T>::HelperDisplayPostOrder(TreeNode<T> *t){
 template<class T>
 BinaryTree<T>::~BinaryTree(){
     FreeTree(root);
-    delete q;
 }
 
 template<class T>
