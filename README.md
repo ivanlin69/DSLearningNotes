@@ -28,7 +28,7 @@ This repository is created for educational purposes, providing implementations o
 - Queue (with Array)
 - Queue (with Circular Array)
 - Queue (with Linked List)
-- Binary Tree (On-going)
+- Binary Tree
 - Binary Search Tree (On-going)
 - Hash Table (On-going)
 
@@ -42,6 +42,7 @@ This repository is created for educational purposes, providing implementations o
 - Queue (with Array)
 - Queue (with Circular Array)
 - Queue (with Linked List)
+- Binary Tree
 
 ## License
 This project is licensed under the MIT License - see the [MIT License Documentation](https://opensource.org/licenses/MIT) for details.
