@@ -8,8 +8,12 @@ void Initialize(struct LinkedList *l){
     l->tail = NULL;
 }
 
-void AddEnd(struct LinkedList * l, int e){
+int AddEnd(struct LinkedList * l, int e){
     struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
+    if(newNode == NULL){
+        printf("malloc failed.\n");
+        return -1;
+    }
     newNode->value = e;
     newNode->next = NULL;
     
@@ -21,10 +25,15 @@ void AddEnd(struct LinkedList * l, int e){
         l->tail = newNode;
     }
     l->length++;
+    return 0;
 }
 
-void AddFront(struct LinkedList * l, int e){
+int AddFront(struct LinkedList * l, int e){
     struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
+    if(newNode == NULL){
+        printf("malloc failed.\n");
+        return -1;
+    }
     newNode->value = e;
     newNode->next = l->head;
     
@@ -33,11 +42,13 @@ void AddFront(struct LinkedList * l, int e){
     }
     l->head = newNode;
     l->length++;
+    return 0;
 }
 
-void DeleteFront(struct LinkedList * l){
+int DeleteFront(struct LinkedList * l){
+    int del = -1;
     if(l->head == NULL){
-        return;
+        return del;
     } else if(l->head->next == NULL){
         free(l->head);
         l->head = NULL;
@@ -45,51 +56,54 @@ void DeleteFront(struct LinkedList * l){
     } else{
         struct Node * temp = l->head;
         l->head = l->head->next;
+        del = temp->value;
         free(temp);
     }
     l->length--;
+    return del;
 }
 
-// delete the target value(first found)
-void Delete(struct LinkedList * l, int e){
-    struct Node * temp = l->head;
-    if(!l->head)
-        return;
+int Delete(struct LinkedList * l, size_t index){
     
-    if(temp->value == e){
-        DeleteFront(l);
-        return;
+    int del = -1;
+    if(l == NULL || l->head == NULL){
+        return del;
     }
     
-    struct Node * prev = NULL;
-    while(temp){
-        if(temp->value == e){
-            break;
+    if(index == 0){
+        return DeleteFront(l);
+    }
+    
+    struct Node * prev = l->head;
+    for(size_t i=0; i<index-1; i++){
+        if(prev->next == NULL){
+            printf("Index out of bound.\n");
+            return del;
         }
-        prev = temp;
-        temp = temp->next;
+        prev = prev->next;
     }
-    if(temp == NULL){
-        return;
-    }
+    
+    struct Node * temp = prev->next;
     if(temp->next == NULL){
-        l->tail = prev;
+        prev->next = NULL;
+    } else{
+        prev->next = temp->next;
     }
-    prev->next = temp->next;
+    del = temp->value;
     free(temp);
     l->length--;
+    return del;
 }
 
-void Insert(struct LinkedList * l, size_t index, int e){
+int Insert(struct LinkedList * l, size_t index, int e){
     
     if(index < 0 || index > l->length){
-        return;
+        printf("Index out of bound.\n");
+        return -1;
     } else if(index == 0){
-        AddFront(l, e);
-        return;
+        return AddFront(l, e);
     } else if(index == l->length){
-        AddEnd(l, e);
-        return;
+        return AddEnd(l, e);
     } else {
         struct Node * t = l->head;
         while(index > 1){
@@ -98,17 +112,26 @@ void Insert(struct LinkedList * l, size_t index, int e){
         }
         
         struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
+        if(newNode == NULL){
+            printf("malloc failed.\n");
+            return -1;
+        }
         newNode->value = e;
         newNode->next = t->next;
         t->next = newNode;
     }
     l->length++;
+    return 0;
 }
 
 // only applied fot an sorted linkedlist
-void InsertSorted(struct LinkedList * l, int e){
+int InsertSorted(struct LinkedList * l, int e){
 
     struct Node * newNode = (struct Node *) malloc(sizeof(struct Node));
+    if(newNode == NULL){
+        printf("malloc failed.\n");
+        return -1;
+    }
     newNode->value = e;
     newNode->next = NULL;
     
@@ -132,6 +155,7 @@ void InsertSorted(struct LinkedList * l, int e){
         }
     }
     l->length++;
+    return 0;
 }
 
 void DisplayLL(struct LinkedList * l){

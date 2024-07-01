@@ -45,9 +45,10 @@ int AddFront(struct LinkedList * l, int e){
     return 0;
 }
 
-void DeleteFront(struct LinkedList * l){
+int DeleteFront(struct LinkedList * l){
+    int del = -1;
     if(l->head == NULL){
-        return;
+        return del;
     } else if(l->head->next == NULL){
         free(l->head);
         l->head = NULL;
@@ -55,27 +56,29 @@ void DeleteFront(struct LinkedList * l){
     } else{
         struct Node * temp = l->head;
         l->head = l->head->next;
+        del = temp->value;
         free(temp);
     }
     l->length--;
+    return del;
 }
 
-void Delete(struct LinkedList * l, size_t index){
+int Delete(struct LinkedList * l, size_t index){
     
+    int del = -1;
     if(l == NULL || l->head == NULL){
-        return;
+        return del;
     }
     
     if(index == 0){
-        DeleteFront(l);
-        return;
+        return DeleteFront(l);
     }
     
     struct Node * prev = l->head;
     for(size_t i=0; i<index-1; i++){
         if(prev->next == NULL){
             printf("Index out of bound.\n");
-            return;
+            return del;
         }
         prev = prev->next;
     }
@@ -86,8 +89,10 @@ void Delete(struct LinkedList * l, size_t index){
     } else{
         prev->next = temp->next;
     }
+    del = temp->value;
     free(temp);
     l->length--;
+    return del;
 }
 
 int Insert(struct LinkedList * l, size_t index, int e){

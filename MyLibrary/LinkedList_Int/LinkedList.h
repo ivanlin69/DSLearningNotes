@@ -15,8 +15,8 @@ struct LinkedList{
 void Initialize(struct LinkedList *l);
 int AddEnd(struct LinkedList * l, int e);
 int AddFront(struct LinkedList * l, int e);
-void DeleteFront(struct LinkedList * l);
-void Delete(struct LinkedList * l, size_t index);
+int DeleteFront(struct LinkedList * l);
+int Delete(struct LinkedList * l, size_t index);
 int Insert(struct LinkedList * l, size_t index, int e);
 
 // only applied fot an sorted linkedlist
