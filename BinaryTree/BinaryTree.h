@@ -8,14 +8,13 @@
 
 struct BinaryTree{
     struct TreeNode * root;
-    struct Queue * q;
 };
 
 void CreateBinaryTree(struct BinaryTree *b){
     
     b->root = (struct TreeNode *) malloc(sizeof(struct TreeNode));
-    b->q = (struct Queue *) malloc(sizeof(struct Queue));
-    CreateQueue(b->q);
+    struct Queue q;
+    CreateQueue(&q);
     int x;
     printf("Enter root value:\n");
     scanf("%d", &x);
@@ -23,10 +22,10 @@ void CreateBinaryTree(struct BinaryTree *b){
     b->root->value = x;
     b->root->right = NULL;
     b->root->left = NULL;
-    EnQueue(b->q, b->root);
+    EnQueue(&q, b->root);
     
-    while(!IsEmpty(b->q)){
-        struct TreeNode * curr = DeQueue(b->q);
+    while(!IsEmpty(&q)){
+        struct TreeNode * curr = DeQueue(&q);
         
         printf("Enter %d's left child's value(-1 if NULL):\n", curr->value);
         scanf("%d", &x);
@@ -35,7 +34,7 @@ void CreateBinaryTree(struct BinaryTree *b){
             curr->left->value = x;
             curr->left->left = NULL;
             curr->left->right = NULL;
-            EnQueue(b->q, curr->left);
+            EnQueue(&q, curr->left);
         }
         
         printf("Enter %d's the right child's value(-1 if NULL):\n", curr->value);
@@ -45,7 +44,7 @@ void CreateBinaryTree(struct BinaryTree *b){
             curr->right->value = x;
             curr->right->left = NULL;
             curr->right->right = NULL;
-            EnQueue(b->q, curr->right);
+            EnQueue(&q, curr->right);
         }
     }
 }
