@@ -17,6 +17,22 @@ int main(int argc, const char * argv[]) {
     printf("Tree traverse - PostOrder:\n");
     b.DisplayPostOrder();
     printf("\n");
+    
+    printf("Tree traverse - IterPreOrder:\n");
+    b.DisplayPreOrderIter();
+    printf("\n");
+    
+    printf("Tree traverse - IterInOrder:\n");
+    b.DisplayInOrderIter();
+    printf("\n");
+    
+    printf("Tree traverse - IterPostOrder:\n");
+    b.DisplayPostOrderIter();
+    printf("\n");
+    
+    printf("Tree traverse - LevelOrder:\n");
+    b.DisplayLevelOrder();
+    printf("\n");
 
 
     return 0;

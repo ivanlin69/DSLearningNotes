@@ -92,6 +92,97 @@ BinaryTree<T>::~BinaryTree(){
 }
 
 template<class T>
+void BinaryTree<T>::DisplayPreOrderIter(){
+    
+    if(root == NULL){
+        return;
+    }
+    
+    Stack<TreeNode<T> *> s(20);
+    TreeNode<T> * curr = root;
+    
+    while(curr != NULL || !s.isEmpty()){
+        if(curr != NULL){
+            printf("%d ", curr->value);
+            s.Push(curr);
+            curr = curr->left;
+        } else {
+            curr = s.Pop();
+            curr = curr->right;
+        }
+    }
+}
+
+template<class T>
+void BinaryTree<T>::DisplayInOrderIter(){
+    
+    if(root == NULL){
+        return;
+    }
+    Stack<TreeNode<T> *> s(20);
+    TreeNode<T> * curr = root;
+    while(curr != NULL || !s.isEmpty()){
+        if(curr != NULL){
+            s.Push(curr);
+            curr = curr->left;
+        } else {
+            curr = s.Pop();
+            printf("%d ", curr->value);
+            curr = curr->right;
+        }
+    }
+}
+
+template<class T>
+void BinaryTree<T>::DisplayPostOrderIter(){
+    
+    if(root == NULL){
+        return;
+    }
+    Stack<TreeNode<T> *> s1(20);
+    Stack<TreeNode<T> *> s2(20);
+    
+    TreeNode<T> * curr = root;
+    s1.Push(curr);
+    
+    while(!s1.isEmpty()){
+        curr = s1.Pop();
+        s2.Push(curr);
+        if(curr->left){
+            s1.Push(curr->left);
+        }
+        if(curr->right){
+            s1.Push(curr->right);
+        }
+    }
+    while(!s2.isEmpty()){
+        printf("%d ", s2.Pop()->value);
+    }
+}
+
+template<class T>
+void BinaryTree<T>::DisplayLevelOrder(){
+    
+    if(root == NULL){
+        return;
+    }
+    
+    Queue<TreeNode<T> *> q(20);
+    q.Enqueue(root);
+    
+    while(!q.isEmpty()){
+        TreeNode<T> * curr = q.Dequeue();
+        printf("%d ", curr->value);
+        if(curr->left){
+            q.Enqueue(curr->left);
+        }
+        if(curr->right){
+            q.Enqueue(curr->right);
+        }
+    }
+}
+
+template<class T>
 void BinaryTree<T>::FreeTree(TreeNode<T> *t){
     if(t == NULL){
         return;

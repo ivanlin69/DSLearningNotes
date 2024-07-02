@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "Queue.hpp"
 #include "Queue.cpp"
+#include "Stack.hpp"
+#include "Stack.cpp"
 
 template<class T>
 struct TreeNode{
@@ -29,6 +31,12 @@ public:
     void DisplayPreOrder();
     void DisplayInOrder();
     void DisplayPostOrder();
+    
+    void DisplayPreOrderIter();
+    void DisplayInOrderIter();
+    void DisplayPostOrderIter();
+    
+    void DisplayLevelOrder();
     
     ~BinaryTree();
     
