@@ -19,5 +19,21 @@ int main(int argc, const char * argv[]) {
     DisplayPostOrder(b->root);
     printf("\n");
     
+    printf("Tree traverse - IterPreOrder:\n");
+    DisplayPreOrderIter(b->root);
+    printf("\n");
+    
+    printf("Tree traverse - IterInOrder:\n");
+    DisplayInOrderIter(b->root);
+    printf("\n");
+    
+    printf("Tree traverse - IterPostOrder:\n");
+    DisplayPostOrderIter(b->root);
+    printf("\n");
+    
+    printf("Tree traverse - LevelOrder:\n");
+    DisplayLevelOrder(b->root);
+    printf("\n");
+    
     return 0;
 }

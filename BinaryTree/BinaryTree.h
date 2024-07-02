@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "QueueLL.h"
+#include "Stack.h"
 
 
 struct BinaryTree{
@@ -47,6 +48,7 @@ void CreateBinaryTree(struct BinaryTree *b){
             EnQueue(&q, curr->right);
         }
     }
+    FreeQueue(&q);
 }
 
 void DisplayPreOrder(struct TreeNode *t){
@@ -58,6 +60,31 @@ void DisplayPreOrder(struct TreeNode *t){
     DisplayPreOrder(t->right);
 }
 
+void DisplayPreOrderIter(struct TreeNode *t){
+    
+    if(t == NULL){
+        return;
+    }
+    
+    struct Stack s;
+    InitializeStack(&s, 30);
+    
+    struct TreeNode * curr = t;
+    
+    while(curr != NULL || !isEmpty(&s)){
+        
+        if(curr != NULL){
+            Push(&s, curr);
+            printf("%d ", curr->value);
+            curr = curr->left;
+        } else{
+            curr = Pop(&s);
+            curr = curr->right;
+        }
+    }
+    FreeStack(&s);
+}
+
 void DisplayInOrder(struct TreeNode *t){
     if(t == NULL){
         return;
@@ -65,6 +92,31 @@ void DisplayInOrder(struct TreeNode *t){
     DisplayInOrder(t->left);
     printf("%d ", t->value);
     DisplayInOrder(t->right);
+}
+
+void DisplayInOrderIter(struct TreeNode *t){
+    
+    if(t == NULL){
+        return;
+    }
+    
+    struct Stack s;
+    InitializeStack(&s, 30);
+    
+    struct TreeNode * curr = t;
+    
+    while(curr != NULL || !isEmpty(&s)){
+        
+        if(curr != NULL){
+            Push(&s, curr);
+            curr = curr->left;
+        } else{
+            curr = Pop(&s);
+            printf("%d ", curr->value);
+            curr = curr->right;
+        }
+    }
+    FreeStack(&s);
 }
 
 void DisplayPostOrder(struct TreeNode *t){
@@ -76,6 +128,61 @@ void DisplayPostOrder(struct TreeNode *t){
     printf("%d ", t->value);
 }
 
+void DisplayPostOrderIter(struct TreeNode *t){
+    
+    if(t == NULL){
+        return;
+    }
+    
+    struct Stack s1;
+    struct Stack s2;
+    InitializeStack(&s1, 30);
+    InitializeStack(&s2, 30);
+    
+    struct TreeNode * curr = t;
+    Push(&s1, curr);
+    
+    while(!isEmpty(&s1)){
+        curr = Pop(&s1);
+        Push(&s2, curr);
+        if(curr->left){
+            Push(&s1, curr->left);
+        }
+        if(curr->right){
+            Push(&s1, curr->right);
+        }
+    }
+    
+    while(!isEmpty(&s2)){
+        curr = Pop(&s2);
+        printf("%d ", curr->value);
+    }
+    FreeStack(&s1);
+    FreeStack(&s2);
+}
 
+void DisplayLevelOrder(struct TreeNode *t){
+    
+    if(t == NULL){
+        return;
+    }
+    
+    struct Queue q;
+    CreateQueue(&q);
+    struct TreeNode * curr = t;
+    EnQueue(&q, curr);
+    
+    while(!IsEmpty(&q)){
+        curr = DeQueue(&q);
+        printf("%d ", curr->value);
+        if(curr->left){
+            EnQueue(&q, curr->left);
+        }
+        if(curr->right){
+            EnQueue(&q, curr->right);
+        }
+    }
+    FreeQueue(&q);
+}
 
 #endif /* BinaryTree_h */
