@@ -35,5 +35,9 @@ int main(int argc, const char * argv[]) {
     DisplayLevelOrder(b->root);
     printf("\n");
     
+    printf("Total number of nodes: %d \n", CountOfNodes(b->root));
+    printf("Total number of nodes with deg 2: %d \n", CountOfNodesDeg2(b->root));
+    printf("Height of the Tree: %d \n", Height(b->root));
+    
     return 0;
 }
