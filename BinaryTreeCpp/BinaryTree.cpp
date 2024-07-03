@@ -191,3 +191,72 @@ void BinaryTree<T>::FreeTree(TreeNode<T> *t){
     FreeTree(t->right);
     delete t;
 }
+
+template<class T>
+int BinaryTree<T>::Height(){
+    return HelperHeight(root);
+}
+
+template<class T>
+int BinaryTree<T>::CountNode(){
+    return HelperCountNode(root);
+}
+
+template<class T>
+int BinaryTree<T>::CountNodeDeg2(){
+    return HelperCountNodeDeg2(root);
+}
+
+template<class T>
+int BinaryTree<T>::CountLeaf(){
+    return HelperCountLeaf(root);
+}
+
+template<class T>
+int BinaryTree<T>::HelperHeight(TreeNode<T> *t){
+    if(t == NULL){
+        return 0;
+    }
+    int l = HelperHeight(t->left);
+    int r = HelperHeight(t->right);
+    if(l > r){
+        return l + 1;
+    }
+    return r + 1;
+}
+
+template<class T>
+int BinaryTree<T>::HelperCountNode(TreeNode<T> *t){
+    if(t == NULL){
+        return 0;
+    }
+    int l = HelperCountNode(t->left);
+    int r = HelperCountNode(t->right);
+    return l + r + 1;
+}
+
+template<class T>
+int BinaryTree<T>::HelperCountNodeDeg2(TreeNode<T> *t){
+    if(t == NULL){
+        return 0;
+    }
+    int l = HelperCountNodeDeg2(t->left);
+    int r = HelperCountNodeDeg2(t->right);
+    if(t->left && t->right){
+        return l + r + 1;
+    }
+    return l + r;
+}
+
+template<class T>
+int BinaryTree<T>::HelperCountLeaf(TreeNode<T> *t){
+    if(t == NULL){
+        return 0;
+    }
+    int l = HelperCountLeaf(t->left);
+    int r = HelperCountLeaf(t->right);
+    if(!t->left && !t->right){
+        return l + r + 1;
+    }
+    return l + r;
+}

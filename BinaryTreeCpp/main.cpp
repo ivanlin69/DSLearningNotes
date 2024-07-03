@@ -33,6 +33,11 @@ int main(int argc, const char * argv[]) {
     printf("Tree traverse - LevelOrder:\n");
     b.DisplayLevelOrder();
     printf("\n");
+    
+    printf("Total number of nodes: %d \n", b.CountNode());
+    printf("Total number of nodes with deg 2: %d \n", b.CountNodeDeg2());
+    printf("Total number of leaf nodes: %d \n", b.CountLeaf());
+    printf("Height of the Tree: %d \n", b.Height());
 
 
     return 0;

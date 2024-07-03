@@ -23,6 +23,11 @@ private:
     void HelperDisplayPostOrder(TreeNode<T> *t);
     void FreeTree(TreeNode<T> *t);
     
+    int HelperHeight(TreeNode<T> *t);
+    int HelperCountNode(TreeNode<T> *t);
+    int HelperCountNodeDeg2(TreeNode<T> *t);
+    int HelperCountLeaf(TreeNode<T> *t);
+    
 public:
     
     
@@ -37,6 +42,11 @@ public:
     void DisplayPostOrderIter();
     
     void DisplayLevelOrder();
+    
+    int Height();
+    int CountNode();
+    int CountNodeDeg2();
+    int CountLeaf();
     
     ~BinaryTree();
     
