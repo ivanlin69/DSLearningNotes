@@ -39,5 +39,7 @@ int main(int argc, const char * argv[]) {
     printf("Total number of nodes with deg 2: %d \n", CountOfNodesDeg2(b->root));
     printf("Height of the Tree: %d \n", Height(b->root));
     
+    FreeTree(b->root);
+    
     return 0;
 }

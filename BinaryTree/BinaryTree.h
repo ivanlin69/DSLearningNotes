@@ -231,4 +231,13 @@ int Height(struct TreeNode *t){
     }
     return 0;
 }
+
+void FreeTree(struct TreeNode *t){
+    if(t != NULL){
+        FreeTree(t->left);
+        FreeTree(t->right);
+        free(t);
+    }
+}
+
 #endif /* BinaryTree_h */
