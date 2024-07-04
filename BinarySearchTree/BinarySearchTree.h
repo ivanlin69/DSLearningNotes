@@ -91,6 +91,134 @@ int InsertNode(struct BinarySearchTree *b, int value){
     return 0;
 }
 
+// we need a pointer to the pointer, otherwise the root node can't be modified
+// if not, we have to assign root first, then for other nodes we can apply the logic(see InsertNodeR2)
+int InsertNodeR(struct TreeNode **t, int value){
+    if(*t == NULL){
+        struct TreeNode * newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
+        newNode->value = value;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        *t = newNode;
+        return 0;
+    }
+    
+    if(value > (*t)->value){
+        return InsertNodeR(&(*t)->right, value);
+    } else if(value < (*t)->value){
+        return InsertNodeR(&(*t)->left, value);
+    } else{
+        printf("Error: Found duplicates.\n");
+        return -1;
+    }
+    
+}
+
+int InsertNodeR2(struct TreeNode *t, int value){
+    if(t->right == NULL && value > t->value){
+        struct TreeNode * newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
+        newNode->value = value;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        t->right = newNode;
+        return 0;
+    } else if(t->left == NULL && value < t->value){
+        struct TreeNode * newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
+        newNode->value = value;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        t->left = newNode;
+        return 0;
+    }
+    
+    if(value > t->value){
+        return InsertNodeR2(t->right, value);
+    } else if(value < t->value){
+        return InsertNodeR2(t->left, value);
+    } else{
+        printf("Error: Found duplicates.\n");
+        return -1;
+    }
+}
+
+//Note: The height of an empty tree is 0 and the height of a tree with single node is 1.
+int Height(struct TreeNode *t){
+    if(t != NULL){
+        int l = Height(t->left);
+        int r = Height(t->right);
+        if(l > r){
+            return l + 1;
+        }
+        return r + 1;
+    }
+    return 0;
+}
+
+struct TreeNode * FindPredecessor(struct TreeNode * t){
+    struct TreeNode * temp = t->left;
+    while(temp->right){
+        temp = temp->right;
+    }
+    return temp;
+}
+
+struct TreeNode * FindSuccessor(struct TreeNode * t){
+    struct TreeNode * temp = t->right;
+    while(temp->left){
+        temp = temp->left;
+    }
+    return temp;
+}
+
+
+struct TreeNode * HelperDeleteNode(struct TreeNode *t, int value){
+    
+    if(!t){
+        return NULL;
+    }
+    
+    if(t->value == value){
+        
+        if(t->left == NULL){
+            struct TreeNode * temp = t->right;
+            free(t);
+            return temp;
+        } else if(t->right == NULL){
+            struct TreeNode * temp = t->left;
+            free(t);
+            return temp;
+        } else {
+            struct TreeNode * pred = NULL;
+            if(Height(t->left) > Height(t->right)){
+                pred = FindPredecessor(t);
+                t->value = pred->value;
+                t->left = HelperDeleteNode(t->left, pred->value);
+            } else{
+                pred = FindSuccessor(t);
+                t->value = pred->value;
+                t->right = HelperDeleteNode(t->right, pred->value);
+            }
+        }
+        
+    } else if(t->value > value){
+        t->left = HelperDeleteNode(t->left, value);
+    } else{
+        t->right = HelperDeleteNode(t->right, value);
+    }
+    return t;
+}
+
+int DeleteNode(struct BinarySearchTree *b, int value){
+    
+    if(b == NULL || b->root == NULL){
+        printf("Error: Tree is empty.\n");
+        return -1;
+    }
+    b->root = HelperDeleteNode(b->root, value);
+    return 0;
+}
+
+
 
 void DisplayPreOrder(struct TreeNode *t){
     if(t == NULL){
@@ -256,19 +384,6 @@ int CountLeafNodes(struct TreeNode *t){
             return l+r+1;
         }
         return l+r;
-    }
-    return 0;
-}
-
-//Note: The height of an empty tree is 0 and the height of a tree with single node is 1.
-int Height(struct TreeNode *t){
-    if(t != NULL){
-        int l = Height(t->left);
-        int r = Height(t->right);
-        if(l > r){
-            return l + 1;
-        }
-        return r + 1;
     }
     return 0;
 }
