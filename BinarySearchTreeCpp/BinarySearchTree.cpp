@@ -230,8 +230,7 @@ bool BinarySearchTree<T>::Delete(T value){
     
     if(parent == NULL){
         root = child;
-    }
-    else if(parent->right == curr){
+    } else if(parent->right == curr){
         parent->right = child;
     } else {
         parent->left = child;
