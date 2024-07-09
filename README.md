@@ -30,6 +30,7 @@ This repository is created for educational purposes, providing implementations o
 - Queue (with Linked List)
 - Binary Tree
 - Binary Search Tree
+- AVL Tree
 - Hash Table (On-going)
 
 ### C++ Implementations
@@ -43,7 +44,7 @@ This repository is created for educational purposes, providing implementations o
 - Queue (with Circular Array)
 - Queue (with Linked List)
 - Binary Tree
-- Binary Search Tree (On-going)
+- Binary Search Tree
 
 ## License
 This project is licensed under the MIT License - see the [MIT License Documentation](https://opensource.org/licenses/MIT) for details.
