@@ -29,7 +29,7 @@ struct TreeNode * LLRotation(struct TreeNode * t){
     
     t->left = lchild->right;
     lchild->right = t;
-    
+    //note that the order is important, update the new root last
     t->height = Height(t);
     lchild->height = Height(lchild);
     
@@ -41,7 +41,7 @@ struct TreeNode * RRRotation(struct TreeNode * t){
     
     t->right = rchild->left;
     rchild->left = t;
-    
+    //note that the order is important, update the new root last
     t->height = Height(t);
     rchild->height = Height(rchild);
     
@@ -190,6 +190,105 @@ struct TreeNode * FindSuccessor(struct TreeNode * t){
     return temp;
 }
 
+int DeleteIter(struct AVLTree *a, int value){
+    
+    if(a == NULL){
+        printf("Invalid tree.\n");
+        return -1;
+    }
+    
+    struct TreeNode * curr = a->root;
+    // for iter, we need a tail pointer for connection
+    struct TreeNode * prev = NULL;
+    
+    struct Stack s;
+    InitializeStack(&s, 100);
+            
+    while(curr != NULL){
+        if(curr->value == value){
+            break;
+        }
+        
+        prev = curr;
+        Push(&s, curr);
+        if(curr->value > value){
+            curr = curr->left;
+        } else {
+            curr = curr->right;
+        }
+    }
+    
+    if(curr == NULL){
+        printf("No such element in the tree.\n");
+        return -1;
+    }
+    
+    if(curr->left && curr->right){
+        
+        struct TreeNode * pred = NULL;
+        // for iter, we need a tail pointer for connection
+        struct TreeNode * predParent = NULL;
+        Push(&s, curr);
+        
+        if(Height(curr->left) > Height(curr->right)){
+            pred = curr->left;
+            while(pred->right){
+                Push(&s, pred);
+                predParent = pred;
+                pred = pred->right;
+            }
+        } else{
+            pred = curr->right;
+            while(pred->left){
+                Push(&s, pred);
+                predParent = pred;
+                pred = pred->left;
+            }
+        }
+        curr->value = pred->value;
+        prev = predParent;
+        curr = pred;
+    }
+    
+    // now deal with the case of 0/1 child together
+    struct TreeNode * child = NULL;
+    if(curr->left != NULL){
+        child = curr->left;
+    } else{
+        child = curr->right;
+    }
+    
+    // if prev = curr = root, then after removed only child lives
+    if(prev == NULL){
+        a->root = child;
+    } else if(prev->right == curr){
+        prev->right = child;
+    } else {
+        prev->left = child;
+    } 
+    free(curr);
+    
+    while(!isEmpty(&s)){
+        struct TreeNode * c = Pop(&s);
+        
+        // backtracking for updating the height of the node and balancing the node
+        c->height = Height(c);
+        c = BalanceNode(c);
+        // make sure after rotation the connection is updated
+        if(!isEmpty(&s)){
+            struct TreeNode * p = Top(&s);
+            if(p->right == c){
+                p->right = c;
+            } else{
+                p->left = c;
+            }
+        } else{
+            // if the stack is empty, then specify the root
+            a->root = c;
+        }
+    }
+    return 0;
+}
 
 struct TreeNode * HelperDeleteNode(struct TreeNode *t, int value){
     
