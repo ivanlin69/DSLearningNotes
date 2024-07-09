@@ -25,28 +25,61 @@ int Height(struct TreeNode *t){
 }
 
 struct TreeNode * LLRotation(struct TreeNode * t){
+    struct TreeNode * lchild = t->left;
     
-    return 
-}
-
-struct TreeNode * LRRotation(struct TreeNode * t){
+    t->left = lchild->right;
+    lchild->right = t;
     
+    t->height = Height(t);
+    lchild->height = Height(lchild);
+    
+    return lchild;
 }
 
 struct TreeNode * RRRotation(struct TreeNode * t){
+    struct TreeNode * rchild = t->right;
     
+    t->right = rchild->left;
+    rchild->left = t;
+    
+    t->height = Height(t);
+    rchild->height = Height(rchild);
+    
+    return rchild;
+}
+
+struct TreeNode * LRRotation(struct TreeNode * t){
+    t->left = RRRotation(t->left);
+    return LLRotation(t);
 }
 
 struct TreeNode * RLRotation(struct TreeNode * t){
-    
-}
-
-int HeightNode(struct TreeNode * t){
-    return Height(t->left) - Height(t->right);
+    t->right = LLRotation(t->right);
+    return RRRotation(t);
 }
 
 int BalanceFactor(struct TreeNode * t){
-    return HeightNode(t->left) - HeightNode(t->right);
+    if(t == NULL){
+        return 0;
+    }
+    return Height(t->left) - Height(t->right);
+}
+
+struct TreeNode * BalanceNode(struct TreeNode *t){
+    if(BalanceFactor(t) > 1){
+        if(BalanceFactor(t->left) >= 0){
+            t = LLRotation(t);
+        } else{
+            t = LRRotation(t);
+        }
+    } else if(BalanceFactor(t) < -1){
+        if(BalanceFactor(t->right) <= 0){
+            t = RRRotation(t);
+        } else{
+            t = RLRotation(t);
+        }
+    }
+    return t;
 }
 
 int InsertNode(struct AVLTree *b, int value){
@@ -68,10 +101,14 @@ int InsertNode(struct AVLTree *b, int value){
     
     struct TreeNode * temp = b->root;
     struct TreeNode * prev = temp;
+    struct Stack s;
+    InitializeStack(&s, 100);
     
     while(temp){
+        Push(&s, temp);
         if(value == temp->value){
             printf("Error: Found duplicates.\n");
+            free(newNode);
             return -1;
         } else if(value > temp->value){
             prev = temp;
@@ -88,53 +125,54 @@ int InsertNode(struct AVLTree *b, int value){
         prev->left = newNode;
     }
     
-    if(BalanceFactor(b->root) == 2){
-        
-        if(BalanceFactor(b->root->left) == 1){
-            LLRotation(b->root);
-        } else {
-            LRRotation(b->root);
-        }
-    } else if(BalanceFactor(b->root) == -2){
-        
-        if(BalanceFactor(b->root->right) == -1){
-            RRRotation(b->root);
-        } else {
-            RLRotation(b->root);
+    while(!isEmpty(&s)){
+        temp = Pop(&s);
+        temp = BalanceNode(temp);
+        if(!isEmpty(&s)){
+            if(Top(&s)->left == temp){
+                Top(&s)->left = temp;
+            } else{
+                Top(&s)->right = temp;
+            }
+        } else{
+            b->root = temp;
         }
     }
-    
     return 0;
 }
 
 
-struct TreeNode * InsertNodeR(struct TreeNode *t, int value){
-    if(t->right == NULL && value > t->value){
+struct TreeNode * HelperInsertNodeR(struct TreeNode *t, int value){
+    if(t == NULL){
         struct TreeNode * newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
         newNode->value = value;
         newNode->left = NULL;
         newNode->right = NULL;
-        t->right = newNode;
-        return 0;
-    } else if(t->left == NULL && value < t->value){
-        struct TreeNode * newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
-        newNode->value = value;
-        newNode->left = NULL;
-        newNode->right = NULL;
-        t->left = newNode;
-        return 0;
+        newNode->height = 1;
+        return newNode;
     }
     
-    if(value > t->value){
-        return InsertNodeR2(t->right, value);
-    } else if(value < t->value){
-        return InsertNodeR2(t->left, value);
+    if(t->value == value){
+        printf("Found duplicates.\n");
+        return t;
+    } else if(t->value > value){
+        t->left = HelperInsertNodeR(t->left, value);
     } else{
-        printf("Error: Found duplicates.\n");
-        return -1;
+        t->right = HelperInsertNodeR(t->right, value);
     }
+    // don't forget to update the height
+    t->height = Height(t);
+    return BalanceNode(t);
 }
 
+int InsertNodeR(struct AVLTree *a, int value){
+    if(a == NULL){
+        printf("Invalid tree.\n");
+        return -1;
+    }
+    a->root = HelperInsertNodeR(a->root, value);
+    return 0;
+}
 
 struct TreeNode * FindPredecessor(struct TreeNode * t){
     struct TreeNode * temp = t->left;
