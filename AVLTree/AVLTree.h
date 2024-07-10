@@ -291,19 +291,23 @@ int DeleteIter(struct AVLTree *a, int value){
 }
 
 struct TreeNode * HelperDeleteNode(struct TreeNode *t, int value){
-    
-    if(!t){
-        return NULL;
+    if(t == NULL){
+        printf("Target not found.\n");
+        return t;
     }
     
-    if(t->value == value){
-        
+    if(t->value > value){
+        t->left = HelperDeleteNode(t->left, value);
+    } else if(t->value < value){
+        t->right = HelperDeleteNode(t->right, value);
+    } else{
+        struct TreeNode * temp = NULL;
         if(t->left == NULL){
-            struct TreeNode * temp = t->right;
+            temp = t->right;
             free(t);
             return temp;
         } else if(t->right == NULL){
-            struct TreeNode * temp = t->left;
+            temp = t->left;
             free(t);
             return temp;
         } else {
@@ -318,16 +322,12 @@ struct TreeNode * HelperDeleteNode(struct TreeNode *t, int value){
                 t->right = HelperDeleteNode(t->right, pred->value);
             }
         }
-        
-    } else if(t->value > value){
-        t->left = HelperDeleteNode(t->left, value);
-    } else{
-        t->right = HelperDeleteNode(t->right, value);
     }
-    return t;
+    t->height = Height(t);
+    return BalanceNode(t);
 }
 
-int DeleteNode(struct AVLTree *b, int value){
+int DeleteR(struct AVLTree *b, int value){
     
     if(b == NULL || b->root == NULL){
         printf("Error: Tree is empty.\n");

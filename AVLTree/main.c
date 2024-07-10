@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
     printf("\n");
     
     DeleteIter(&a, 8);
+    DeleteR(&a, 7);
     
     printf("Tree traverse - PreOrder:\n");
     DisplayPreOrder(a.root);
