@@ -31,7 +31,7 @@ This repository is created for educational purposes, providing implementations o
 - Binary Tree
 - Binary Search Tree
 - AVL Tree
-- Hash Table (On-going)
+- Heap
 
 ### C++ Implementations
 
