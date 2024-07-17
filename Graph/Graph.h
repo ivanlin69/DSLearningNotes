@@ -73,6 +73,45 @@ void BFS(struct Graph *g, int root){
     FreeQueue(&q);
 }
 
+void DFS(struct Graph *g, int root){
+    if(g == NULL || root > g->vertices){
+        printf("Invalid graph or given vertex.\n");
+        return;
+    }
+
+    int explored[g->vertices+1];
+    for(size_t i=0; i<=g->vertices; i++){
+        explored[i] = 0;
+    }
+    
+    struct Stack s;
+    InitializeStack(&s, 30);
+    Push(&s, root);
+    printf("%d ", root);
+    explored[root] = 1;
+    struct Node * temp = NULL;
+    
+    while(!isEmpty(&s)){
+        int curr = Pop(&s);
+        temp = g->list->A[curr]->head;
+        
+        while(temp){
+            while(temp && explored[temp->value] != 0){
+                temp = temp->next;
+            }
+            if(temp){
+                printf("%d ", temp->value);
+                Push(&s, temp->value);
+                explored[temp->value] = 1;
+                
+                temp = g->list->A[temp->value]->head;
+            }
+        }
+    }
+    printf("\n");
+    FreeStack(&s);
+}
+
 void FreeGraph(struct Graph *g){
     for(size_t i=0; i<=g->vertices; i++){
         freeLinkedlist(g->list->A[i]);

@@ -15,6 +15,10 @@ int main(int argc, const char * argv[]) {
     AddEdge(&g, 5, 6);
     AddEdge(&g, 5, 7);
     BFS(&g, 1);
+    BFS(&g, 4);
+    
+    DFS(&g, 1);
+    DFS(&g, 4);
     
     FreeGraph(&g);
     return 0;
