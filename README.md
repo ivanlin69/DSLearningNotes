@@ -32,6 +32,7 @@ This repository is created for educational purposes, providing implementations o
 - Binary Search Tree
 - AVL Tree
 - Heap
+- Graph
 
 ### C++ Implementations
 
