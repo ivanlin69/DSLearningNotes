@@ -112,6 +112,82 @@ void DFS(struct Graph *g, int root){
     FreeStack(&s);
 }
 
+void DFSv2(struct Graph *g, int root){
+    if(g == NULL || root > g->vertices){
+        printf("Invalid graph or given vertex.\n");
+        return;
+    }
+
+    int explored[g->vertices+1];
+    for(size_t i=0; i<=g->vertices; i++){
+        explored[i] = 0;
+    }
+    
+    struct Stack s;
+    InitializeStack(&s, 30);
+    Push(&s, root);
+    struct Node * temp = NULL;
+    
+    while(!isEmpty(&s)){
+        int curr = Pop(&s);
+        if(explored[curr] == 0){
+            printf("%d ", curr);
+            explored[curr] = 1;
+        }
+        
+        temp = g->list->A[curr]->head;
+        
+        while(temp){
+            if(explored[temp->value] == 0){
+                Push(&s, temp->value);
+            }
+            temp = temp->next;
+        }
+    }
+    printf("\n");
+    FreeStack(&s);
+}
+
+
+void HelperDFSr(struct Graph *g, int curr, int *explored){
+
+    printf("%d ", curr);
+    explored[curr] = 1;
+    
+    struct Node * temp = g->list->A[curr]->head;
+    while(temp){
+        if(explored[temp->value] == 0){
+            HelperDFSr(g, temp->value, explored);
+        }
+        temp = temp->next;
+    }
+}
+
+void DFSr(struct Graph *g, int root){
+    int explored[g->vertices+1];
+    for(size_t i=0; i<=g->vertices; i++){
+        explored[i] = 0;
+    }
+    HelperDFSr(g, root, explored);
+    
+    printf("\n");
+}
+
+// Visits all the nodes even the graph is disconnected
+void DFSr2(struct Graph *g, int root){
+    int explored[g->vertices+1];
+    for(size_t i=0; i<=g->vertices; i++){
+        explored[i] = 0;
+    }
+    for(int i=1; i<=g->vertices; i++){
+        if(explored[i] == 0){
+            HelperDFSr(g, i, explored);
+        }
+    }
+    printf("\n");
+}
+
+
 void FreeGraph(struct Graph *g){
     for(size_t i=0; i<=g->vertices; i++){
         freeLinkedlist(g->list->A[i]);

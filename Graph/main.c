@@ -12,13 +12,15 @@ int main(int argc, const char * argv[]) {
     AddEdge(&g, 3, 4);
     AddEdge(&g, 3, 5);
     AddEdge(&g, 4, 5);
-    AddEdge(&g, 5, 6);
+    //AddEdge(&g, 5, 6); // make the graph disconnected
     AddEdge(&g, 5, 7);
     BFS(&g, 1);
     BFS(&g, 4);
     
     DFS(&g, 1);
-    DFS(&g, 4);
+    DFSv2(&g, 1);
+    DFSr(&g, 1);
+    DFSr2(&g, 1);
     
     FreeGraph(&g);
     return 0;
