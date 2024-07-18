@@ -15,11 +15,9 @@ int main(int argc, const char * argv[]) {
     g.AddEdge(5, 7);
     g.BFS(1);
     g.BFS(4);
-    
+
     g.DFS(1);
-    g.DFSv2(1);
     g.DFSr(1);
-    g.DFSr2(1);
-    
+    //g.DFSr2(1);
     return 0;
 }

@@ -1,7 +1,6 @@
 #ifndef Queue_hpp
 #define Queue_hpp
 #include "LinkedList.hpp"
-#include "LinkedList.cpp"
 
 template<class T>
 class Queue{
